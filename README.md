@@ -15,3 +15,16 @@ Pluto may be started from the Julia command line with
 ```bash
 julia> using Pluto; Pluto.run()
 ```
+
+
+## Starting Jupyter
+Install requirements
+```bash
+pip install -r requirements.txt
+```
+Provided you haven't already activated this local Julia envionment, do so as above.
+
+Start jupyter
+```bash
+jupyter-notebook
+```
