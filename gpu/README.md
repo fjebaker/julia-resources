@@ -9,3 +9,7 @@ I am using [CUDA.jl](https://juliagpu.gitlab.io/CUDA.jl/), with an NVIDIA GTX 98
 In another project I am trying to write a geodesic intersection tracing algorithm with parallelization support for the GPU.
 
 The included notebook here explains my initial research procedure in achieving this.
+
+The order of notebooks is
+- Geodesic Tracing
+- GPU Memory
