@@ -28,3 +28,8 @@ Start jupyter
 ```bash
 jupyter-notebook
 ```
+
+In a julia prompt, for the interactive widgets you will also require [WebIO](https://juliagizmos.github.io/WebIO.jl/latest/) (which is installed with `IJulia`) -- to set this up, use
+```jl
+WebIO.install_jupyter_nbextension()
+```
