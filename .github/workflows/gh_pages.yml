@@ -1,0 +1,42 @@
+# based off of:
+# https://github.com/choldgraf/deploy_configurations/blob/master/.github/workflows/main.yml
+
+name: "Pages"
+
+on:
+  push:
+    branches:
+      - master
+      - publish
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Python setup
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.9
+  
+    - name: Install dependencies
+      run: |
+        sudo apt-get install python3-pip
+        pip install jupyter-book
+        pip install ghp-import
+        PATH="${PATH}:${HOME}/.local/bin"
+
+    - name: Jupyter-Book build
+      run: |
+        jupyter-book build ./src
+      
+    - name: Publish on pages branch
+      run: |
+        sudo chown -R $(whoami):$(whoami) .
+        git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        git config --global user.name "$GITHUB_ACTOR"
+        git remote set-url origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY"
+        ghp-import ./src/_build/html -f -p -n
+    

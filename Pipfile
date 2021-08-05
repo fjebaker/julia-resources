@@ -5,9 +5,11 @@ name = "pypi"
 
 [scripts]
 jn = "jupyter-notebook"
+build = "jb build src"
 
 [packages]
 jupyter = "*"
+jupyter-book = "*"
 
 [dev-packages]
 
