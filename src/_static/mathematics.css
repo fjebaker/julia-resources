@@ -1,0 +1,38 @@
+
+.theorem {
+    border-color:#c566df;
+}
+.admonition.theorem .admonition-title {
+    background-color: #edddf4;
+}
+.admonition.theorem .admonition-title::before {
+    color: #c566df;
+    content: "T";
+}
+
+.lemma {
+    border-color:#c566df;
+}
+.admonition.lemma .admonition-title {
+    background-color: #edddf4;
+}
+.admonition.lemma .admonition-title::before {
+    color: #c566df;
+    content: "L";
+}
+
+.query {
+    border-color:#6866df;
+}
+.admonition.query .admonition-title {
+    background-color: #e9ddf4;
+}
+.admonition.query .admonition-title::before {
+    color: #6866df;
+    content: "Q";
+}
+
+.admonition p.admonition-title ~ * {
+    right: +1em;
+    padding: 0;
+}

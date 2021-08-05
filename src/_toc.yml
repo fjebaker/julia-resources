@@ -1,0 +1,27 @@
+format: jb-book
+
+root: titlepage
+
+parts:
+- caption: GPU
+  chapters:
+    - file: gpu/gpu-memory
+    - file: gpu/practical-kernels
+    - file: gpu/cuda-overview
+
+- caption: Optimization
+  chapters:
+    - file: optimization/jump_basics
+    - file: optimization/jump_conic
+
+- caption: SciML
+  chapters:
+    - file: sciml/intro_autodiff
+    - file: sciml/neural_universal_diff_eq_01
+    - file: sciml/neural_universal_diff_eq_02
+
+
+- caption: Quantum
+  chapters:
+    - file: quantum/quantum_ising
+    - file: quantum/ml_ising
