@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.14
+# v0.12.21
 
 using Markdown
 using InteractiveUtils
@@ -110,8 +110,6 @@ We will use ADAM optimization, with a callback to observe the training steps:
 
 # ╔═╡ 3473a06a-f5e8-11ea-2797-a574855b69ba
 begin	
-	training_plots = []
-	
 	iter = 0
 	callback = function()
 		global iter += 1
@@ -131,7 +129,7 @@ begin
 				ylim=(0,8)
 			)
 			
-			scatter!(
+			Flux.scatter!(
 				pl, 
 				0.0:0.1:10,
 				test_data',
@@ -154,22 +152,22 @@ end
 md"We can then examine the plots to see how the model fits to the data:"
 
 # ╔═╡ fac89ad0-f5e9-11ea-0cce-ab48597fe5ee
-training_plots
+iter
 
 # ╔═╡ Cell order:
 # ╠═e610c9be-f5e4-11ea-1eca-d12d7e232c97
-# ╟─2345f746-f5e5-11ea-3892-29f10df5d54e
-# ╟─37126f6a-f5e6-11ea-0c15-25c47262abbd
+# ╠═2345f746-f5e5-11ea-3892-29f10df5d54e
+# ╠═37126f6a-f5e6-11ea-0c15-25c47262abbd
 # ╠═ab1fa440-f5e6-11ea-1331-7788f25321df
 # ╠═b19175e2-f5e6-11ea-0792-7ff2d906559a
 # ╟─f69c5e90-f5e6-11ea-0e64-efbf763cc73c
 # ╠═029a2b66-f5e7-11ea-3295-cfc47e791b06
-# ╟─4062a76e-f5e7-11ea-06c3-ddb2ae8f40e3
+# ╠═4062a76e-f5e7-11ea-06c3-ddb2ae8f40e3
 # ╠═8d77e154-f5e7-11ea-2b89-fd0b39acfc70
 # ╠═9219095c-f5e7-11ea-1209-ebeff8f7bf57
-# ╟─c478e590-f5e7-11ea-33b8-efe407e1900e
+# ╠═c478e590-f5e7-11ea-33b8-efe407e1900e
 # ╠═ebf21e3e-f5e7-11ea-217f-e7b4247bd770
-# ╟─1eacfbb4-f5e8-11ea-2e0f-f5d074f18db2
+# ╠═1eacfbb4-f5e8-11ea-2e0f-f5d074f18db2
 # ╠═3473a06a-f5e8-11ea-2797-a574855b69ba
 # ╟─a3c97010-f5eb-11ea-236c-ad6a5f75af75
 # ╠═fac89ad0-f5e9-11ea-0cce-ab48597fe5ee
