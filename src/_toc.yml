@@ -16,6 +16,7 @@ parts:
 
 - caption: SciML
   chapters:
+    - file: sciml/optim_serial_code
     - file: sciml/intro_autodiff
     - file: sciml/neural_universal_diff_eq_01
     - file: sciml/neural_universal_diff_eq_02

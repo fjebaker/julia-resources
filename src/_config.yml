@@ -22,6 +22,10 @@ only_build_toc_files: true
 latex:
   latex_engine: xelatex
 
+parse:
+  myst_enable_extensions:
+    - html_image
+
 sphinx:
   config:
     html_css_files: 
