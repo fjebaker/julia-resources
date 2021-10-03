@@ -1,0 +1,1030 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Optimizing serial code &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Automatic differentiation" href="intro_autodiff.html" />
+    <link rel="prev" title="JuMP with conic problems" href="../optimization/jump_conic.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/gpu-memory.html">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/practical-kernels.html">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/cuda-overview.html">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_conic.html">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/quantum_ising.html">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/ml_ising.html">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/sciml/optim_serial_code.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Fsciml/optim_serial_code.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/sciml/optim_serial_code.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/sciml/optim_serial_code.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cpu-memory">
+   CPU memory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#array-ordering-and-cache-lines">
+   Array ordering and cache lines
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#broadcasting">
+     Broadcasting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#views">
+     Views
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#summary">
+     Summary
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiple-dispatch">
+   Multiple dispatch
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#union-types">
+     Union types
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#primatives">
+     Primatives
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#function-barriers">
+     Function barriers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Summary
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="optimizing-serial-code">
+<h1>Optimizing serial code<a class="headerlink" href="#optimizing-serial-code" title="Permalink to this headline">¶</a></h1>
+<p>Notes made following the <a class="reference external" href="https://github.com/mitmath/18337">MIT Math 18337 course</a>.</p>
+<p>Parallelism is a performance improver; if the performance of a piece of code is already poor, parallelization will not make the situation significantly better.</p>
+<p>To understand how to write a <em>fast parallel program</em>, it is essential to first know and understand the hardware we are writing our code for, and how serial code can be made to fully take advantage of our system.</p>
+<p>We begin with examining the memory model of modern architectures.</p>
+<div class="section" id="cpu-memory">
+<h2>CPU memory<a class="headerlink" href="#cpu-memory" title="Permalink to this headline">¶</a></h2>
+<p>The memory layout of a CPU may be sketched as in the following schematic:</p>
+<a class="bg-white reference internal image-reference" href="../_images/memory_layout.png"><img alt="memory layout" class="bg-white" src="../_images/memory_layout.png" style="width: 300px;" /></a>
+<p>Diagram inspired by Ferruccio Zulian.</p>
+<p>The L1 cache has the fastest memory access, followed by L2, L3, and then RAM. To exploit the L1 speed, we use a technique known as <em>cache warming</em>, i.e. keeping the resources we need continuously close to the compute cores.</p>
+<p>A good illustration to keep in mind is the following infographic:</p>
+<p><img alt="not all CPU operations are created equal" src="http://ithare.com/wp-content/uploads/part101_infographics_v08.png" /></p>
+<p>We can illustrate this memory overhead in terms of cache lines and array structures.</p>
+</div>
+<div class="section" id="array-ordering-and-cache-lines">
+<h2>Array ordering and cache lines<a class="headerlink" href="#array-ordering-and-cache-lines" title="Permalink to this headline">¶</a></h2>
+<p>Modern CPUs try to predict what is needed in the cache; e.g. for arrays, a <em>cache line</em> is loaded into the CPU cache, which is the next chunk of an array.</p>
+<p>In the case of one dimensional arrays, this is straight forward to visualise: a cache line may fit $n$ values, thus $n$ contiguous values are loaded into the cache so that iterating over the array is faster.</p>
+<p>When the arrays are multi dimensional, different languages abstract how the memory is stored in their interface; the two common systems are <em>row-</em> and <em>column-major</em> memory layouts.</p>
+<p>For <em>column</em> major layouts, each column is stored top to bottom in a one dimensional array continuously, whereas in <em>row</em> major layouts, the rows are stored side to side.</p>
+<p>To make best use of the cache, we want to ensure we are iterating over the major layout; consider:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">BenchmarkTools</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="k">function</span> <span class="n">inner_rows!</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">500</span><span class="p">,</span> <span class="n">j</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">500</span>
+    <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>inner_rows! (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above iterates over the <em>rows</em> of the two dimensional array, before incrementing the column count.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">inner_rows!</span><span class="p">(</span><span class="o">$</span><span class="n">C</span><span class="p">,</span> <span class="o">$</span><span class="n">A</span><span class="p">,</span> <span class="o">$</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 9779 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">475.324 μs</span> … <span class=" -Color -Color-Magenta"> 1.224 ms</span>  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">494.925 μs              </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">508.100 μs</span> ± <span class=" -Color -Color-Green">49.391 μs</span>  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▅▆▆██<span class=" -Color -Color-Blue">▆</span>▆▆<span class=" -Color -Color-Green">▅</span>▄▄▂▁  ▁▁▁▁                                          ▂
+  █████<span class=" -Color -Color-Blue">█</span>██<span class=" -Color -Color-Green">█</span>█████████████▇▇▇███▇▇█▇█▇▇▆▇▆▆▅▆▅▅▅▅▄▆▅▂▆▄▄▄▄▆▅▅▄▅▅ █
+  475 μs        Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time       730 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">0 bytes</span>, allocs estimate: <span class=" -Color -Color-Yellow">0</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Performing the same operation, but iterating over the columns first:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">inner_cols!</span><span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">500</span><span class="p">,</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">500</span>
+    <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>inner_cols! (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Will yield a dramatic performance improvement:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">inner_cols!</span><span class="p">(</span><span class="o">$</span><span class="n">C</span><span class="p">,</span> <span class="o">$</span><span class="n">A</span><span class="p">,</span> <span class="o">$</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">303.785 μs</span> … <span class=" -Color -Color-Magenta">762.236 μs</span>  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">378.531 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">380.954 μs</span> ± <span class=" -Color -Color-Green"> 42.000 μs</span>  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▁ ▆▂▅▂▁         ▄▂▇█<span class=" -Color -Color-Blue">▅</span>▄▄▃▄▄▄▄▄▃▃▂▂▁▁▁                          ▂
+  █▇██████████▆██▇████<span class=" -Color -Color-Blue">█</span>█████████████████▇█▇▇▇▇▇▅▆▅▆▇▆▆▅▆▆▅▅▆▅▄▆ █
+  304 μs        Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time        536 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">0 bytes</span>, allocs estimate: <span class=" -Color -Color-Yellow">0</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong>: Julia is column major, whereas Python (numpy) is row major.</p>
+<div class="section" id="broadcasting">
+<h3>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this headline">¶</a></h3>
+<p>Julia’s broadcast mechanism generates and JIT compiles Julia functions on the fly. Compare this to, e.g. numpy, which has a specifc C API it relies on, and thus cannot adapt well to combinations of operations, as each operation calls a different C function, instead of combining the operations into a single (Julia) function.</p>
+</div>
+<div class="section" id="views">
+<h3>Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h3>
+<p>Slices in Julia default allocate, unless prefixed with <code class="docutils literal notranslate"><span class="pre">&#64;view</span></code> or a block with <code class="docutils literal notranslate"><span class="pre">&#64;views</span></code>.</p>
+</div>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<p>Important points:</p>
+<ul class="simple">
+<li><p>iterate along layout major</p></li>
+<li><p>avoid heap allocations (heap allocations happen when size not known at compile time)</p></li>
+<li><p>mutate to avoid heap allocations</p></li>
+<li><p>fuse broadcasts; prefer <code class="docutils literal notranslate"><span class="pre">&#64;.</span></code> instead of many <code class="docutils literal notranslate"><span class="pre">.+</span></code>, <code class="docutils literal notranslate"><span class="pre">.=</span></code>, etc.</p></li>
+<li><p>Julia loops are as fast as C, thus array vectorisation offers little benefit (standard algorithms just help reading intent)</p></li>
+<li><p>use views instead of slices to avoid (copy) allocations</p></li>
+<li><p>avoid heap allocations for O(n)</p></li>
+</ul>
+<p>Use a library abstraction like <code class="docutils literal notranslate"><span class="pre">StaticArrays.jl</span></code> to avoid heap allocations.</p>
+</div>
+</div>
+<div class="section" id="multiple-dispatch">
+<h2>Multiple dispatch<a class="headerlink" href="#multiple-dispatch" title="Permalink to this headline">¶</a></h2>
+<p>Julia uses type inferrence to optimize memory; a function written in Julia without types is known as a <code class="docutils literal notranslate"><span class="pre">generic</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>f (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In contrast to other generic functions in other languages, a Julia <code class="docutils literal notranslate"><span class="pre">generic</span></code> is not a single function, but rather is compiled to inferred types when invoked. This can be demonstrated by examining the LLVM <em>intermediate representation</em> (IR) using a Julia macro:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_llvm</span> <span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>;  @ In[5]:1 within `f&#39;
+define <span class=" -Color -Color-Cyan">i64</span> @julia_f_1707<span class=" -Color -Color-Yellow">(</span><span class=" -Color -Color-Cyan">i64</span> signext %0, <span class=" -Color -Color-Cyan">i64</span> signext %1<span class=" -Color -Color-Yellow">)</span> <span class=" -Color -Color-Yellow">{</span>
+top:
+; ┌ @ int.jl:87 within `+&#39;
+   %2 = <span class=" -Color -Color-Bold">add</span> <span class=" -Color -Color-Cyan">i64</span> %1, %0
+; └
+  <span class=" -Color -Color-Bold">ret</span> <span class=" -Color -Color-Cyan">i64</span> %2
+<span class=" -Color -Color-Yellow">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, the type inferred was <code class="docutils literal notranslate"><span class="pre">i64</span></code>. By contrast:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_llvm</span> <span class="n">f</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>;  @ In[5]:1 within `f&#39;
+define <span class=" -Color -Color-Cyan">double</span> @julia_f_1742<span class=" -Color -Color-Yellow">(</span><span class=" -Color -Color-Cyan">double</span> %0, <span class=" -Color -Color-Cyan">double</span> %1<span class=" -Color -Color-Yellow">)</span> <span class=" -Color -Color-Yellow">{</span>
+top:
+; ┌ @ float.jl:326 within `+&#39;
+   %2 = <span class=" -Color -Color-Bold">fadd</span> <span class=" -Color -Color-Cyan">double</span> %0, %1
+; └
+  <span class=" -Color -Color-Bold">ret</span> <span class=" -Color -Color-Cyan">double</span> %2
+<span class=" -Color -Color-Yellow">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The inferred type is now <code class="docutils literal notranslate"><span class="pre">double</span></code>.</p>
+<p>A Julia <code class="docutils literal notranslate"><span class="pre">generic</span></code> is then actually a family of functions, with a new one compiled each time it is called with a new type combination:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_llvm</span> <span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>;  @ In[5]:1 within `f&#39;
+define <span class=" -Color -Color-Cyan">double</span> @julia_f_1744<span class=" -Color -Color-Yellow">(</span><span class=" -Color -Color-Cyan">i64</span> signext %0, <span class=" -Color -Color-Cyan">double</span> %1<span class=" -Color -Color-Yellow">)</span> <span class=" -Color -Color-Yellow">{</span>
+top:
+; ┌ @ promotion.jl:321 within `+&#39;
+; │┌ @ promotion.jl:292 within `promote&#39;
+; ││┌ @ promotion.jl:269 within `_promote&#39;
+; │││┌ @ number.jl:7 within `convert&#39;
+; ││││┌ @ float.jl:94 within `Float64&#39;
+       %2 = <span class=" -Color -Color-Bold">sitofp</span> <span class=" -Color -Color-Cyan">i64</span> %0 to <span class=" -Color -Color-Cyan">double</span>
+; │└└└└
+; │ @ promotion.jl:321 within `+&#39; @ float.jl:326
+   %3 = <span class=" -Color -Color-Bold">fadd</span> <span class=" -Color -Color-Cyan">double</span> %2, %1
+; └
+  <span class=" -Color -Color-Bold">ret</span> <span class=" -Color -Color-Cyan">double</span> %3
+<span class=" -Color -Color-Yellow">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that here the return type was inferred as <code class="docutils literal notranslate"><span class="pre">double</span></code>, and the <code class="docutils literal notranslate"><span class="pre">i64</span></code> argument is promoted to a <code class="docutils literal notranslate"><span class="pre">double</span></code>.</p>
+<p>A different Julia macro lets us inspect how the types are being inferred in every operation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_warntype</span> <span class="n">f</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables
+  #self#<span class=" -Color -Color-Cyan">::Core.Const(f)</span>
+  x<span class=" -Color -Color-Cyan">::Float64</span>
+  y<span class=" -Color -Color-Cyan">::Int64</span>
+
+Body<span class=" -Color -Color-Cyan">::Float64</span>
+1 ─ %1 = (x + y)<span class=" -Color -Color-Cyan">::Float64</span>
+└──      return %1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Julia is able to perform this type inferrence as soon as a function is called; consider a more involved example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">c</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">d</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+  <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>g (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The types are fully deduced as soon as <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are inferred:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_warntype</span> <span class="n">g</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables
+  #self#<span class=" -Color -Color-Cyan">::Core.Const(g)</span>
+  x<span class=" -Color -Color-Cyan">::Int64</span>
+  y<span class=" -Color -Color-Cyan">::Float64</span>
+  d<span class=" -Color -Color-Cyan">::Int64</span>
+  c<span class=" -Color -Color-Cyan">::Int64</span>
+  b<span class=" -Color -Color-Cyan">::Int64</span>
+  a<span class=" -Color -Color-Cyan">::Int64</span>
+
+Body<span class=" -Color -Color-Cyan">::Float64</span>
+1 ─      (a = 4)
+│        (b = 2)
+│        (c = Main.f(x, a::Core.Const(4)))
+│        (d = Main.f(b::Core.Const(2), c))
+│   %5 = Main.f(d, y)<span class=" -Color -Color-Cyan">::Float64</span>
+└──      return %5
+</pre></div>
+</div>
+</div>
+</div>
+<p>And the IR even inlines to optimize further:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_llvm</span> <span class="n">g</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>;  @ In[10]:1 within `g&#39;
+define <span class=" -Color -Color-Cyan">double</span> @julia_g_2119<span class=" -Color -Color-Yellow">(</span><span class=" -Color -Color-Cyan">i64</span> signext %0, <span class=" -Color -Color-Cyan">double</span> %1<span class=" -Color -Color-Yellow">)</span> <span class=" -Color -Color-Yellow">{</span>
+top:
+;  @ In[10]:5 within `g&#39;
+; ┌ @ In[5]:1 within `f&#39;
+; │┌ @ int.jl:87 within `+&#39;
+    %2 = <span class=" -Color -Color-Bold">add</span> <span class=" -Color -Color-Cyan">i64</span> %0, <span class=" -Color -Color-Yellow">6</span>
+; └└
+;  @ In[10]:6 within `g&#39;
+; ┌ @ In[5]:1 within `f&#39;
+; │┌ @ promotion.jl:321 within `+&#39;
+; ││┌ @ promotion.jl:292 within `promote&#39;
+; │││┌ @ promotion.jl:269 within `_promote&#39;
+; ││││┌ @ number.jl:7 within `convert&#39;
+; │││││┌ @ float.jl:94 within `Float64&#39;
+        %3 = <span class=" -Color -Color-Bold">sitofp</span> <span class=" -Color -Color-Cyan">i64</span> %2 to <span class=" -Color -Color-Cyan">double</span>
+; ││└└└└
+; ││ @ promotion.jl:321 within `+&#39; @ float.jl:326
+    %4 = <span class=" -Color -Color-Bold">fadd</span> <span class=" -Color -Color-Cyan">double</span> %3, %1
+; └└
+  <span class=" -Color -Color-Bold">ret</span> <span class=" -Color -Color-Cyan">double</span> %4
+<span class=" -Color -Color-Yellow">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="union-types">
+<h3>Union types<a class="headerlink" href="#union-types" title="Permalink to this headline">¶</a></h3>
+<p>If the types cannot be inferred to a single outcome, Julia will use a type <code class="docutils literal notranslate"><span class="pre">Union</span></code> to keep the memory as restricted as possible and to be able to compile to the highest degree of optimization:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">h</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+  <span class="n">out</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+  <span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="o">?</span> <span class="n">out</span> <span class="o">:</span> <span class="kt">Float64</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>h (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The type deduction here is much more complex, since if <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are both integers, <code class="docutils literal notranslate"><span class="pre">out</span></code> will be an integer, and thus the function may either return an <code class="docutils literal notranslate"><span class="pre">Int64</span></code> or a <code class="docutils literal notranslate"><span class="pre">Float64</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_warntype</span> <span class="n">h</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables
+  #self#<span class=" -Color -Color-Cyan">::Core.Const(h)</span>
+  x<span class=" -Color -Color-Cyan">::Int64</span>
+  y<span class=" -Color -Color-Cyan">::Int64</span>
+  out<span class=" -Color -Color-Cyan">::Int64</span>
+
+Body<span class=" -Color -Color-Bold">::Union{Float64, Int64}</span>
+1 ─      (out = x + y)
+│   %2 = Main.rand()<span class=" -Color -Color-Cyan">::Float64</span>
+│   %3 = (%2 &lt; 0.5)<span class=" -Color -Color-Cyan">::Bool</span>
+└──      goto #3 if not %3
+2 ─      return out
+3 ─ %6 = Main.Float64(out)<span class=" -Color -Color-Cyan">::Float64</span>
+└──      return %6
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Union</span></code>s are not quite as optimizeable as single types, however are still allow for much better performance than <code class="docutils literal notranslate"><span class="pre">Any</span></code>.</p>
+</div>
+<div class="section" id="primatives">
+<h3>Primatives<a class="headerlink" href="#primatives" title="Permalink to this headline">¶</a></h3>
+<p>Julia value types are fully inferrable and composed of <em>primative</em> types, which can be verified with the <code class="docutils literal notranslate"><span class="pre">isbits</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">isbits</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>Structs which are entirely value based also are fully inferrable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="kt">ComplexNumber_1</span>
+    <span class="n">real</span><span class="o">::</span><span class="kt">Float64</span>
+    <span class="n">imag</span><span class="o">::</span><span class="kt">Float64</span>
+<span class="k">end</span>
+
+<span class="n">isbits</span><span class="p">(</span><span class="n">ComplexNumber_1</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>Contrast this with a more generically typed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="kt">ComplexNumber_2</span>
+    <span class="n">real</span><span class="o">::</span><span class="kt">Number</span>
+    <span class="n">imag</span><span class="o">::</span><span class="kt">Number</span>
+<span class="k">end</span>
+
+<span class="n">isbits</span><span class="p">(</span><span class="n">ComplexNumber_2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>false
+</pre></div>
+</div>
+</div>
+</div>
+<p>Even though</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="kt">Int64</span> <span class="o">&lt;:</span> <span class="kt">Number</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can mitigate this with template generics:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="kt">ComplexNumber_3</span><span class="p">{</span><span class="kt">T</span><span class="p">}</span>
+    <span class="n">real</span><span class="o">::</span><span class="kt">T</span>
+    <span class="n">imag</span><span class="o">::</span><span class="kt">T</span>
+<span class="k">end</span>
+
+<span class="n">isbits</span><span class="p">(</span><span class="n">ComplexNumber_3</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since a different <code class="docutils literal notranslate"><span class="pre">ComplexNumber_3{T}</span></code> is compiled depending on the arguments, and thus is a concrete type. Such a template generic will optimize well when used any inferrable type.</p>
+<p>Finally, note that <code class="docutils literal notranslate"><span class="pre">isbits</span></code> does not apply to mutable types, since mutable types are heap allocated (unless completely erased by compiler destructuring). Types which are <code class="docutils literal notranslate"><span class="pre">isbits</span></code> compile down to bit-wise operations in Julia, and thus can be used with other devices, such as GPU kernels.</p>
+</div>
+<div class="section" id="function-barriers">
+<h3>Function barriers<a class="headerlink" href="#function-barriers" title="Permalink to this headline">¶</a></h3>
+<p>An array with non-concrete types can lead to un-optimizable code. For example, the array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="kt">Number</span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2-element Vector{Number}:
+ 1.0
+ 3
+</pre></div>
+</div>
+</div>
+</div>
+<p>To fully optimize loops and function calls within a function body, we can use barriers to ensure the dispatched function has stable and concrete types.</p>
+<p>Contrast this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">r</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">100</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+  <span class="k">end</span>
+  <span class="n">a</span>
+<span class="k">end</span>
+
+<span class="nd">@benchmark</span> <span class="n">r</span><span class="p">(</span><span class="o">$</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 7 evaluations.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">5.178 μs</span> … <span class=" -Color -Color-Magenta">191.758 μs</span>  ┊ GC (min … max): 0.00% … 96.53%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">6.054 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">6.268 μs</span> ± <span class=" -Color -Color-Green">  4.518 μs</span>  ┊ GC (mean ± σ):  1.83% ±  2.55%
+
+  ▃▄▁▂▂▁ ▁<span class=" -Color -Color-Blue">▅</span>▅<span class=" -Color -Color-Green">█</span>                                                  
+  ██████▇█<span class=" -Color -Color-Blue">█</span>█<span class=" -Color -Color-Green">█</span>▆▃▆▃▄▃▄▃▃▃▆▄▂▂▂▂▂▂▂▂▂▂▂▁▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂ ▃
+  5.18 μs         Histogram: frequency by time        11.4 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">4.69 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">300</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>With a <em>guarded</em> version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="n">_s</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="k">function</span> <span class="n">_s</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">100</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+  <span class="k">end</span>
+  <span class="n">a</span>
+<span class="k">end</span>
+
+<span class="nd">@benchmark</span> <span class="n">s</span><span class="p">(</span><span class="o">$</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 200 evaluations.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">382.470 ns</span> … <span class=" -Color -Color-Magenta"> 1.592 μs</span>  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">412.245 ns              </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">436.922 ns</span> ± <span class=" -Color -Color-Green">68.642 ns</span>  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▅  ▇▁<span class=" -Color -Color-Blue">█</span>▂▂ ▁<span class=" -Color -Color-Green"> </span>▁    ▁ ▄▁ ▃  ▂  ▂  ▄▂                             ▁
+  █▆▃██<span class=" -Color -Color-Blue">█</span>██▇█<span class=" -Color -Color-Green">▅</span>█▅█▇▆█▆██▇█▇▅█▆▅█▆▅██▇▅▇▄▅▆▅▄▆▅▅▄▅▅▅▅▃▃▅▄▄▃▅▃▃▃▄▃ █
+  382 ns        Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time       708 ns <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">16 bytes</span>, allocs estimate: <span class=" -Color -Color-Yellow">1</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The interface of <code class="docutils literal notranslate"><span class="pre">r(x)</span></code> and <code class="docutils literal notranslate"><span class="pre">s(x)</span></code> is exactly the same.</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">r(x)</span></code> cannot type inferr:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_warntype</span> <span class="n">r</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables
+  #self#<span class=" -Color -Color-Cyan">::Core.Const(r)</span>
+  x<span class=" -Color -Color-Cyan">::Vector{Number}</span>
+  @_3<span class=" -Color -Color-Bold -Color-Bold-Yellow">::Union{Nothing, Tuple{Int64, Int64}}</span>
+  b<span class=" -Color -Color-Cyan">::Int64</span>
+  a<span class=" -Color -Color-Bold">::Any</span>
+  i<span class=" -Color -Color-Cyan">::Int64</span>
+  d<span class=" -Color -Color-Bold">::Any</span>
+  c<span class=" -Color -Color-Bold">::Any</span>
+
+Body<span class=" -Color -Color-Bold">::Any</span>
+1 ─       (a = 4)
+│         (b = 2)
+│   %3  = (1:100)<span class=" -Color -Color-Cyan">::Core.Const(1:100)</span>
+│         (@_3 = Base.iterate(%3))
+│   %5  = (@_3::Core.Const((1, 1)) === nothing)<span class=" -Color -Color-Cyan">::Core.Const(false)</span>
+│   %6  = Base.not_int(%5)<span class=" -Color -Color-Cyan">::Core.Const(true)</span>
+└──       goto #4 if not %6
+2 ┄ %8  = @_3::Tuple{Int64, Int64}<span class=" -Color -Color-Cyan">::Tuple{Int64, Int64}</span>
+│         (i = Core.getfield(%8, 1))
+│   %10 = Core.getfield(%8, 2)<span class=" -Color -Color-Cyan">::Int64</span>
+│   %11 = Base.getindex(x, 1)<span class=" -Color -Color-Bold">::Number</span>
+│         (c = Main.f(%11, a))
+│         (d = Main.f(b::Core.Const(2), c))
+│   %14 = d<span class=" -Color -Color-Bold">::Any</span>
+│   %15 = Base.getindex(x, 2)<span class=" -Color -Color-Bold">::Number</span>
+│         (a = Main.f(%14, %15))
+│         (@_3 = Base.iterate(%3, %10))
+│   %18 = (@_3 === nothing)<span class=" -Color -Color-Cyan">::Bool</span>
+│   %19 = Base.not_int(%18)<span class=" -Color -Color-Cyan">::Bool</span>
+└──       goto #4 if not %19
+3 ─       goto #2
+4 ┄       return a
+</pre></div>
+</div>
+</div>
+</div>
+<p>And nor can <code class="docutils literal notranslate"><span class="pre">s(x)</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_warntype</span> <span class="n">s</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables
+  #self#<span class=" -Color -Color-Cyan">::Core.Const(s)</span>
+  x<span class=" -Color -Color-Cyan">::Vector{Number}</span>
+
+Body<span class=" -Color -Color-Bold">::Any</span>
+1 ─ %1 = Base.getindex(x, 1)<span class=" -Color -Color-Bold">::Number</span>
+│   %2 = Base.getindex(x, 2)<span class=" -Color -Color-Bold">::Number</span>
+│   %3 = Main._s(%1, %2)<span class=" -Color -Color-Bold">::Any</span>
+└──      return %3
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, <code class="docutils literal notranslate"><span class="pre">_s</span></code> may be specialised since <code class="docutils literal notranslate"><span class="pre">%1</span></code> and <code class="docutils literal notranslate"><span class="pre">%2</span></code> in the IR will be concrete, and the cost is only a single <em>dynamic</em> dispatch.</p>
+</div>
+<div class="section" id="id1">
+<h3>Summary<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Julia is able to optimize well through type inferrence (when concrete types <em>can</em> be inferred)</p></li>
+<li><p>multiple dispatch leverage type specialisation for minimal- or zero-overhead runtime</p></li>
+<li><p>ensuring known types in function bodies and loops can drastically improve performance</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./sciml"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="../optimization/jump_conic.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">JuMP with conic problems</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="intro_autodiff.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Automatic differentiation</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

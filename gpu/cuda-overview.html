@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A deep-dive into CUDA.jl &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="JuMP basics" href="../optimization/jump_basics.html" />
+    <link rel="prev" title="Writing practical CUDA kernels" href="practical-kernels.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gpu-memory.html">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="practical-kernels.html">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_conic.html">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/optim_serial_code.html">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/quantum_ising.html">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/ml_ising.html">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/gpu/cuda-overview.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Fgpu/cuda-overview.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/gpu/cuda-overview.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/gpu/cuda-overview.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#abstractions">
+   Abstractions
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="a-deep-dive-into-cuda-jl">
+<h1>A deep-dive into CUDA.jl<a class="headerlink" href="#a-deep-dive-into-cuda-jl" title="Permalink to this headline">¶</a></h1>
+<p>Based on a <a class="reference external" href="https://www.youtube.com/watch?v=Hz9IMJuW5hU">workshop from JuliaCon2021</a>, link to <a class="reference external" href="https://github.com/maleadt/juliacon21-gpu_workshop">GitHub repository with the workshop notes</a>.</p>
+<p>A quick rule-of-thumb note on libraries:</p>
+<ul class="simple">
+<li><p>NVIDIA uses <a class="reference external" href="https://github.com/JuliaGPU/CUDA.jl">CUDA.jl</a></p></li>
+<li><p>AMD uses <a class="reference external" href="https://github.com/JuliaGPU/AMDGPU.jl">AMDGPU.jl</a></p></li>
+<li><p>A common API is provided by <a class="reference external" href="https://github.com/JuliaGPU/oneAPI.jl">oneAPI.jl</a></p></li>
+</ul>
+<p>There are many other libraries available that wrap or leverage other specific features, but these may be considered as the main three. It is useful to bare in mind the differences when trying to write portable code.</p>
+<p>Another useful tool is <a class="reference external" href="https://github.com/mcabbott/Tullio.jl">Tullio.jl</a>, which provides einsum macros that automatically use GPU or threading features to speed up your code.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">CUDA</span><span class="p">,</span> <span class="n">BenchmarkTools</span><span class="p">,</span> <span class="n">Tullio</span>
+<span class="n">CUDA</span><span class="o">.</span><span class="n">allowscalar</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="abstractions">
+<h2>Abstractions<a class="headerlink" href="#abstractions" title="Permalink to this headline">¶</a></h2>
+<p>Although the Julia GPU libraries provide alternate implementations for many abstractions, they are not exhaustive. These implementations generate <em>scalar kernels</em> hidden behind the multiple dispatch, and are often simple drop in replacements when using standard algorithms or abstractions.</p>
+<p>Many are supported:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">broadcast</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">do</span> <span class="n">x</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5-element CuArray{Float32, 1}:
+ 2.0
+ 2.0
+ 2.0
+ 2.0
+ 2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">.+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5-element CuArray{Float32, 1}:
+ 2.0
+ 2.0
+ 2.0
+ 2.0
+ 2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">map</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">do</span> <span class="n">x</span>
+    <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5-element CuArray{Float32, 1}:
+ 2.0
+ 2.0
+ 2.0
+ 2.0
+ 2.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.0f0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">accumulate</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5-element CuArray{Float32, 1}:
+ 1.0
+ 2.0
+ 3.0
+ 4.0
+ 5.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, CUDA is implementing these abstractions directly on type hierarchy and generating kernels. Thus their interoperability is not guarunteed, and using functions together operating on arrays will not result in GPU kernels being generated:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">broadcast</span><span class="p">(</span><span class="n">eachcol</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">do</span> <span class="n">x</span>
+    <span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10-element Vector{Float32}:
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+ 10.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The above only results in a single kernel launched per column. We can investigate this by examining the generated code using</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_warntype</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@code_typed</span>
+</pre></div>
+</div>
+<p>and indeed we see the broadcast being called is running on the CPU, with the <code class="docutils literal notranslate"><span class="pre">sum(x)</span></code> call spawing kernels.</p>
+<p>We can more intuitively see this in a benchmark comparison. We use</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span>
+</pre></div>
+</div>
+<p>to ensure the function call is synchronised with the execution on the device, as otherwise the function returns immediately after dispatching the kernel.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="n">broadcast</span><span class="p">(</span><span class="n">eachcol</span><span class="p">(</span><span class="o">$</span><span class="n">b</span><span class="p">))</span> <span class="k">do</span> <span class="n">x</span>
+    <span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">199.408 μs</span> … <span class=" -Color -Color-Magenta"> 38.064 ms</span>  ┊ GC (min … max): 0.00% … 30.59%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">211.100 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">299.489 μs</span> ± <span class=" -Color -Color-Green">875.649 μs</span>  ┊ GC (mean ± σ):  2.66% ±  0.94%
+
+  █<span class=" -Color -Color-Blue">▇</span>▃▂▁   <span class=" -Color -Color-Green"> </span>                                            ▄▃       ▁
+  █<span class=" -Color -Color-Blue">█</span>████▇█<span class=" -Color -Color-Green">▆</span>▅▆▆▆▆▆▃▄▄▅▇▆▅▄▅▄▄▁▄▃▄▄▃▅▄▅▃▁▄▅▄▄▁▄▅▆▄▃▄▄▅▄▁▇██▇▆▄▃▄█ █
+  199 μs        Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time        970 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">26.23 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">673</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="n">sum</span><span class="p">(</span><span class="n">b</span><span class="p">;</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan"> 13.833 μs</span> … <span class=" -Color -Color-Magenta">  7.825 ms</span>  ┊ GC (min … max): 0.00% … 65.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue"> 15.171 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">344.530 μs</span> ± <span class=" -Color -Color-Green">510.946 μs</span>  ┊ GC (mean ± σ):  0.29% ±  0.96%
+
+  <span class=" -Color -Color-Blue">█</span>    ▄  ▁        <span class=" -Color -Color-Green"> </span>                                        ▆ ▃ ▁
+  <span class=" -Color -Color-Blue">█</span>▆▄▇██▅▄█▆▃▃▄▆▄▃▄<span class=" -Color -Color-Green">▁</span>▁▁▃▄▆▄▃▄▄▃▁▃▁▁▁▃▃▃▃▄▁▁▃▄▁▁▁▁▁▃▄▁▁▁▃▃▃▁▃▅█▇█ █
+  13.8 μs       Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time       1.18 ms <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">2.06 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">49</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>More complex and involved kernels can also be generated by other tools, such as Tullio.jl. For example, the expression</p>
+<p>$$
+x_i = \sum_{j} \sum_{k} b_{ji} + b_{ik}
+$$</p>
+<p>can be executed as a GPU kernel with</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">reshape</span><span class="p">(</span><span class="n">CUDA</span><span class="o">.</span><span class="n">CuArray</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">100</span><span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">CUDA</span><span class="o">.</span><span class="nd">@allowscalar</span> <span class="nd">@tullio</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">:=</span> <span class="n">b</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10-element CuArray{Int64, 1}:
+  5150
+  6250
+  7350
+  8450
+  9550
+ 10650
+ 11750
+ 12850
+ 13950
+ 15050
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./gpu"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="practical-kernels.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Writing practical CUDA kernels</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../optimization/jump_basics.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">JuMP basics</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

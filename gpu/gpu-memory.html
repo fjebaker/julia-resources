@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPU memory &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing practical CUDA kernels" href="practical-kernels.html" />
+    <link rel="prev" title="Julia Resources" href="../titlepage.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="practical-kernels.html">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cuda-overview.html">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_conic.html">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/optim_serial_code.html">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/quantum_ising.html">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/ml_ising.html">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/gpu/gpu-memory.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Fgpu/gpu-memory.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/gpu/gpu-memory.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/gpu/gpu-memory.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#memory-model">
+   Memory model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computation">
+     Computation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thread-topology">
+   Thread topology
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#memory">
+   Memory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#device-introspection">
+   Device introspection
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="gpu-memory">
+<h1>GPU memory<a class="headerlink" href="#gpu-memory" title="Permalink to this headline">¶</a></h1>
+<p>This notebook contains notes on the GPU memory layout, processing, and some of the lower-level access to the CUDA API which interfaces with those aspects, as well as the specific CUDA.jl bindings.</p>
+<p>I watched a series of videos last night, which explain how CUDA functions</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=m0nhePeHwFs&amp;list=PLKK11Ligqititws0ZOoGk3SW-TZCar4dK">CUDA Tutorials</a> by Creel</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=cRY5utouJzQ">Intro to Cuda</a> by Josh Holloway</p></li>
+</ul>
+<div class="section" id="memory-model">
+<h2>Memory model<a class="headerlink" href="#memory-model" title="Permalink to this headline">¶</a></h2>
+<p>In short, the GPU memory and architecture looks something like this:</p>
+<p><img alt="" src="../_images/gpumem.png" /></p>
+<div class="section" id="computation">
+<h3>Computation<a class="headerlink" href="#computation" title="Permalink to this headline">¶</a></h3>
+<p>The principle units of GPU processing are <strong>threads</strong>, which in CUDA are arranged into <strong>blocks</strong>. GPUs use this block-based processing design so that the same code can run irrespective of the GPU model itself, with more powerful GPUs churning through more blocks at a time.</p>
+<p>The GPU has a number of <strong>streaming multiprocessors</strong> (SM), each consisting of a number of <strong>streaming processors</strong> (SP), which are scalar lanes, running a single thread at a time. A SM schedules instructions to the SP as it executes a block, through the <strong>warp scheduler</strong>.</p>
+<p>A block is exectuted in <strong>warps</strong>, where a single warp is usually defined as the execution of 32 simultaneous threads (related to memory access transaction specifics, see <a class="reference external" href="https://stackoverflow.com/a/11821971">this SO answer</a>).</p>
+<p>A single block can hold up to 1024 threads, and there is no practical limit on the number of blocks you can define.</p>
+<p>An overall scheduler on the GPU will distribute blocks to the SMs, which in turn will execute a number of warps per clock cycle until all of the blocks have been completed.</p>
+<p>In CUDA, when we launch a processing kernel (a routine/algorithm/function) on the GPU, we can specifiy the block layout, and within those blocks, the number of threads.</p>
+<p>The block layout is known as a <strong>grid</strong>.</p>
+<p>There’s elements of tradeoffs between number of threads and the shared memory in a block, which is why you may want to limit these things.</p>
+<p>Note, there are tools to help you optimize this: for example, in CUDA.jl:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">launch_configuration</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="thread-topology">
+<h2>Thread topology<a class="headerlink" href="#thread-topology" title="Permalink to this headline">¶</a></h2>
+<p>When launching a kernel on a GPU, you provide a topology specifying the dimensionality of your blocks and grids. For example, you could run 27 threads in a 3-dimensional block (3x3x3), and launch 25 of those blocks in a two dimensional grid (5x5).</p>
+<p>In order to help each thread uniquely identify itself (and consequently the data it should compute over) CUDA uses <code class="docutils literal notranslate"><span class="pre">threadIdx</span></code> and <code class="docutils literal notranslate"><span class="pre">blockIdx</span></code> to store topology information.</p>
+<p>When block and grid are both 1-dimensional, we can use the formula</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">blockIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>to determine a unique identifier for our thread.</p>
+</div>
+<div class="section" id="memory">
+<h2>Memory<a class="headerlink" href="#memory" title="Permalink to this headline">¶</a></h2>
+<p>Each block has <strong>shared memory</strong>, which is stored on-chip of the SM. This memory is typically rather small (10s of kilobytes), and is used for intercommunication between threads. The RW operations are consequently very fast by proximity. Shared memory is accessed through an L1 cache, so write operations to shared memory must be synchronised.</p>
+<p>Each thread has <strong>register memory</strong> (unlike CPUs, there are many thousand GPU registers) for storing immediate data, and any spillover from register memory is stored in the thread’s local memory. Now despite the name, the local memory is off-chip, stored in the GPUs equivalent of DRAM, and so RW operations are slow. The local memory is owned and exclussively accessible by the running thread, as, of course, as the registers.</p>
+<p>Then there is the <strong>global memory</strong>, which is host not only to each thread’s local memory, but itself represents memory that each thread can read and write to, albeit slow by distance, and not write-threadsafe.</p>
+<p>The global memory also houses the <strong>constant memory</strong> (sections of read-only written by the CPU and locked when a kernel launches), and the texture memory, which is special interpolated read-only memory.</p>
+<p>On modern GPUs, the global memory is accessed through an L2 cache.</p>
+<p>Memory accesses are often combined between threads; thus reaching for e.g. global memory is best done by many threads at approximately the same time, so that the hardware can conglomerate the action.</p>
+</div>
+<div class="section" id="device-introspection">
+<h2>Device introspection<a class="headerlink" href="#device-introspection" title="Permalink to this headline">¶</a></h2>
+<p>The CUDA library provides different tools for obtaining information on GPU devices, such as the command line <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> for a whole range of information. However CUDA.jl provides bindings for much of what we would need:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">CUDA</span>
+<span class="n">CUDA</span><span class="o">.</span><span class="n">versioninfo</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CUDA toolkit 11.3.1, artifact installation
+CUDA driver 11.2.0
+NVIDIA driver 460.73.1
+
+Libraries: 
+- CUBLAS: 11.5.1
+- CURAND: 10.2.4
+- CUFFT: 10.4.2
+- CUSOLVER: 11.1.2
+- CUSPARSE: 11.6.0
+- CUPTI: 14.0.0
+- NVML: 11.0.0+460.73.1
+- CUDNN: 8.20.0 (for CUDA 11.3.0)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green"> Downloading</span> artifact: CUTENSOR
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>- CUTENSOR: 1.3.0 (for CUDA 11.2.0)
+
+Toolchain:
+- Julia: 1.6.2
+- LLVM: 11.0.1
+- PTX ISA support: 3.2, 4.0, 4.1, 4.2, 4.3, 5.0, 6.0, 6.1, 6.3, 6.4, 6.5, 7.0
+- Device capability support: sm_35, sm_37, sm_50, sm_52, sm_53, sm_60, sm_61, sm_62, sm_70, sm_72, sm_75, sm_80
+
+1 device:
+  0: GeForce GTX 980 (sm_52, 3.377 GiB / 3.946 GiB available)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">dev</span> <span class="o">=</span> <span class="n">collect</span><span class="p">(</span><span class="n">CUDA</span><span class="o">.</span><span class="n">devices</span><span class="p">())[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CuDevice(0): GeForce GTX 980
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <a class="reference external" href="https://forums.developer.nvidia.com/t/compute-capability/110091">compute capability</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">capability</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v&quot;5.2.0&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numbers of threas per warp:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">warpsize</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32
+</pre></div>
+</div>
+</div>
+</div>
+<p>Number of threads per block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">CU_DEVICE_ATTRIBUTE_MAX_THREADS_PER_BLOCK</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1024
+</pre></div>
+</div>
+</div>
+</div>
+<p>The amount of shared memory per block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">CU_DEVICE_ATTRIBUTE_MAX_SHARED_MEMORY_PER_BLOCK</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49152
+</pre></div>
+</div>
+</div>
+</div>
+<p>which is about 46 KB.</p>
+<p>Total constant memory:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">CU_DEVICE_ATTRIBUTE_TOTAL_CONSTANT_MEMORY</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65536
+</pre></div>
+</div>
+</div>
+</div>
+<p>Maximum number of registers per block:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">CU_DEVICE_ATTRIBUTE_MAX_REGISTERS_PER_BLOCK</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65536
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">CU_DEVICE_ATTRIBUTE_REGISTERS_PER_BLOCK</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>65536
+</pre></div>
+</div>
+</div>
+</div>
+<p>Multiprocessor count:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">CUDA</span><span class="o">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">CU_DEVICE_ATTRIBUTE_MULTIPROCESSOR_COUNT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./gpu"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="../titlepage.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Julia Resources</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="practical-kernels.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Writing practical CUDA kernels</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

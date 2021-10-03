@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JuMP with conic problems &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Optimizing serial code" href="../sciml/optim_serial_code.html" />
+    <link rel="prev" title="JuMP basics" href="jump_basics.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/gpu-memory.html">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/practical-kernels.html">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/cuda-overview.html">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/optim_serial_code.html">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/quantum_ising.html">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/ml_ising.html">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/optimization/jump_conic.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Foptimization/jump_conic.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/optimization/jump_conic.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/optimization/jump_conic.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   JuMP with conic problems
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conic-programming">
+   Conic programming
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-largest-eingenvalue-of-symmetric-matrix">
+   Example: largest eingenvalue of symmetric matrix
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="jump-with-conic-problems">
+<h1>JuMP with conic problems<a class="headerlink" href="#jump-with-conic-problems" title="Permalink to this headline">¶</a></h1>
+<p>A cone is defined as the subset</p>
+<div class="admonition-definition-cone admonition">
+<p class="admonition-title">Definition: Cone</p>
+<p>Vector space $C \subset V$ is a cone if and only if</p>
+<div class="math notranslate nohighlight">
+\[\alpha x \in C, \ \ \forall x \in C, \ \alpha \in \mathbb{R}^+.\]</div>
+</div>
+<p>Furthmore, a convex cone</p>
+<div class="admonition-definition-convex-cone admonition">
+<p class="admonition-title">Definition: Convex cone</p>
+<p>$C$ is said to be a <em>convex cone</em> if</p>
+<div class="math notranslate nohighlight">
+\[\alpha x + \beta y \in C\]</div>
+<p>for any $\alpha, \beta \in \mathbb{R}^+$ and any $x, y \in C$.</p>
+</div>
+<p>As an illustrative example, consider the vector space $V$ spanned by $\hat{x}$, $\hat{y}$, $\hat{z}$, with <em>subspace</em> $C$ being the plane defined by $x + y + z = 0$.</p>
+<p>For any vector $\vec{q} \in C$, the product $\alpha \vec{q} \in C$, thus $C$ is a <em>cone</em>, and additionally $\alpha x + \beta y \in C$, as per the above definition, thus $C$ is also a <em>convex cone</em>.</p>
+<p>This generalizes to the statement that any <em>subspace</em> is a <em>convex cone</em>.</p>
+<p>In linear algebra, the cone definition is extended for a $m \times r$ matrix $A$, the cone is generated by the columns</p>
+<p>$$
+C_A = \left{ Ax \ \vert  \ x \in \mathbb{R}^{r, +} \right} \subseteq \mathbb{R}^m.
+$$</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">LinearAlgebra</span>
+<span class="c"># reduced set</span>
+<span class="n">Rʳ⁺</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+
+<span class="c"># 3x4 matrix</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="mi">3</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+     <span class="mi">3</span>  <span class="o">-</span><span class="mi">4</span> <span class="o">-</span><span class="mi">4</span>  <span class="mi">2</span><span class="p">;</span>
+     <span class="mi">1</span>  <span class="o">-</span><span class="mi">2</span>  <span class="mi">1</span>  <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">Cₐ</span> <span class="o">=</span> <span class="p">[</span><span class="n">A</span> <span class="o">*</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="n">Rʳ⁺</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4-element Vector{Vector{Int64}}:
+ [-2, 3, 1]
+ [-2, -4, -2]
+ [-3, -4, 1]
+ [-1, 2, 3]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plotting these for a visualisation of the cone</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Plots</span>
+<span class="n">gr</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span>
+
+<span class="n">plotline!</span><span class="p">(</span><span class="n">points</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span> <span class="o">=</span> <span class="n">plot!</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">:</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">:</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="o">:</span><span class="p">];</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">v</span> <span class="k">in</span> <span class="n">Cₐ</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">hcat</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="n">plotline!</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="c"># connect main vertices</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">Cₐ</span><span class="p">,</span> <span class="p">[</span><span class="n">Cₐ</span><span class="p">[</span><span class="mi">2</span><span class="o">:</span><span class="k">end</span><span class="p">]</span><span class="o">...</span><span class="p">,</span> <span class="n">Cₐ</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">reduce</span><span class="p">(</span><span class="n">hcat</span><span class="p">,</span> <span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+    <span class="n">plotline!</span><span class="p">(</span><span class="n">points</span><span class="p">;</span> <span class="n">ls</span><span class="o">=</span><span class="ss">:dash</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="c"># populate some more random v ∈ C</span>
+<span class="k">for</span> <span class="n">v</span> <span class="k">in</span> <span class="p">(</span><span class="n">A</span> <span class="o">*</span> <span class="p">[</span><span class="n">rand</span><span class="p">(),</span> <span class="n">rand</span><span class="p">(),</span> <span class="n">rand</span><span class="p">(),</span> <span class="n">rand</span><span class="p">()]</span> <span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">hcat</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="n">plotline!</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">p</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/jump_conic_6_0.svg" src="../_images/jump_conic_6_0.svg" /></div>
+</div>
+<p>Note that cones do not have to be circular in the common sense of a cone. Note that since the above $A$ is affine, then $C_A$ is also a <em>convex cone</em>.</p>
+</div>
+<div class="section" id="conic-programming">
+<h1>Conic programming<a class="headerlink" href="#conic-programming" title="Permalink to this headline">¶</a></h1>
+<p>A <em>conic programming</em> problem is a convex optimization problem; for some convex cone $C \subset V$ and a set of <em>affine</em> constraints $h_i(v) = 0, v \in V$ over an <em>affine</em> subspace $\mathcal{H}$, the optimization problem is to find
+$$
+v_0 \in C \cap \mathcal{H},
+$$
+for which a real-valued convex function $f : C \rightarrow \mathbb{R}$ is minimized.</p>
+<p>This is perhaps best explained through an example: consider $C \subset \mathbb{R}^n$</p>
+<p>$$
+\begin{align}
+&amp; \min_{x \in C} \ \ c^T x, \
+\text{s.t.} \ \ \ \ \ \ &amp; A x - b = 0, x \in C
+\end{align}
+$$</p>
+<p>Here, our affine transformation is $ x \mapsto A x - b$ giving rise to the constraints on the problem, and our convex function is the product $f : x \mapsto c^T x \in \mathbb{R}$.</p>
+<p>Let us consider a few examples in JuMP. Note, as is often the case, the optimization of these problems depends on using the correct solver: see <a class="reference external" href="https://jump.dev/JuMP.jl/v0.19.0/installation/index.html#Getting-Solvers-1">this table in the documentation</a>.</p>
+</div>
+<div class="section" id="example-largest-eingenvalue-of-symmetric-matrix">
+<h1>Example: largest eingenvalue of symmetric matrix<a class="headerlink" href="#example-largest-eingenvalue-of-symmetric-matrix" title="Permalink to this headline">¶</a></h1>
+<p>Let $A$ have eigenvalues $\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n $.</p>
+<p>Then the matrix $tI - A$ will have eigenvalues $t - \lambda_1, t - \lambda_2, \dots, t - \lambda_n$. For the case of $t \geq \lambda_1$, all of these eigenvalues will be non-negative.</p>
+<p>This problem can then be described by a <em>Positive Semidefinite Cone</em>. <a class="reference external" href="http://theanalysisofdata.com/probability/C_4.html">Positive semidefinite matrices</a> of dimension $n$ form a cone in $\mathbb{R}^n$ denoted by
+$$
+C_+^n = \left{ x \in C^n \ \vert \ a^T x a \geq 0, \forall a \in \mathbb{R}^n \right}
+$$</p>
+<p>The optimization problem may be written</p>
+<p>$$
+\begin{align}
+&amp; \lambda_1 = \max t \
+\text{s.t.} \ \ \ &amp; tI - A \geq 0. \
+\end{align}
+$$</p>
+<p>In JuMP, this may be expressed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">JuMP</span>
+<span class="k">using</span> <span class="n">SCS</span> <span class="c"># optimizer</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">2</span> <span class="mi">4</span><span class="p">;</span>
+     <span class="mi">2</span> <span class="mi">0</span> <span class="mi">2</span><span class="p">;</span> 
+     <span class="mi">4</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">optimizer_with_attributes</span><span class="p">(</span><span class="n">SCS</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">,</span> <span class="s">&quot;verbose&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="nd">@variable</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="nd">@objective</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Min</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="nd">@constraint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">t</span> <span class="o">*</span> <span class="kt">Matrix</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">A</span> <span class="k">in</span> <span class="n">PSDCone</span><span class="p">())</span>
+
+<span class="n">optimize!</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">objective_value</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7.999999999999894
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">eigen</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3-element Vector{Float64}:
+ -0.9999999999999996
+ -0.9999999999999947
+  8.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">*</span> <span class="kt">Matrix</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">A</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3×3 Matrix{AffExpr}:
+ t - 3  -2  -4
+ -2     t   -2
+ -4     -2  t - 3
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./optimization"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="jump_basics.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">JuMP basics</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="../sciml/optim_serial_code.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Optimizing serial code</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

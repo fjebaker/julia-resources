@@ -1,0 +1,892 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ising transition with machine learning &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Quantum Ising Model" href="quantum_ising.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/gpu-memory.html">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/practical-kernels.html">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/cuda-overview.html">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_conic.html">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/optim_serial_code.html">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantum_ising.html">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/quantum/ml_ising.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Fquantum/ml_ising.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/quantum/ml_ising.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/quantum/ml_ising.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-the-monte-carlo-simulation">
+   Creating the Monte-Carlo simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualisation-functions">
+     Visualisation functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#parallelization">
+   Parallelization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-data">
+   Training data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#temperature-seperation">
+     Temperature seperation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-the-transition">
+   Learning the transition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#confidence-measures">
+     Confidence measures
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training">
+     Training
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="ising-transition-with-machine-learning">
+<h1>Ising transition with machine learning<a class="headerlink" href="#ising-transition-with-machine-learning" title="Permalink to this headline">¶</a></h1>
+<p>Inspired by a <a class="reference external" href="https://juliaphysics.github.io/PhysicsTutorials.jl/tutorials/machine_learning/ml_ising/ml_ising.html">blog post by Carsten Bauer</a>.</p>
+<p>Our aim is to use machine learning techniques to identify the Onsager solution to the Ising problem. The Onsager solution gives the termperature when the magnet undergoes the transition from paramagnetic to ferromagnetic phases.</p>
+<p>For this, we need to implement a Monte-Carlo simulation of the magnetic moments: we iterate a random configuration of spins and flip a spin site if the Metropolis criteria is met
+$$
+P = \min \left{ 1, e^{- \beta \Delta E} \right},
+$$</p>
+<p>with $\Delta E$ being the energy difference if the spin is flipped, and $\beta = 1/T$ where $T$ is the temperature of the system.</p>
+<p>$\Delta E$ only depends on the local neighbours of the spin site, and thus can be evaluated by only considering the surrounding neighbours. The Hamiltonian our <em>simplified</em> system may be written
+$$
+H = \sum_{\left\langle i,j \right\rangle} \sigma_i \sigma_j,
+$$</p>
+<p>where the sum is over neighbouring sites, and $\sigma_i$ represent the spin vectors. For our simulation, we will allow only $-1$ and $1$ as possible values for the spin, representing up and down spins.</p>
+<p>The exact Onsager solution is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Onsager</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.269185314213022
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-the-monte-carlo-simulation">
+<h2>Creating the Monte-Carlo simulation<a class="headerlink" href="#creating-the-monte-carlo-simulation" title="Permalink to this headline">¶</a></h2>
+<p>As we’ll need a lot of simulated data to train a machine learning model, so we’ll leverage <a class="reference external" href="https://docs.julialang.org/en/v1/stdlib/Distributed/">Julia’s distributed computing</a> techniques to process simulations in parallel processes.</p>
+<p>We can configure this setup for $8$ processes using a master-worker communication topology:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Distributed</span>
+
+<span class="k">if</span> <span class="n">nprocs</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">8</span>
+   <span class="n">addprocs</span><span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="n">nprocs</span><span class="p">(),</span> <span class="n">topology</span><span class="o">=</span><span class="ss">:master_worker</span><span class="p">)</span> 
+<span class="k">end</span>
+
+<span class="nd">@everywhere</span> <span class="k">begin</span>
+    <span class="k">import</span> <span class="n">Pkg</span>
+    <span class="n">Pkg</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s">&quot;../..&quot;</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      From worker 6:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+      From worker 3:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+      From worker 4:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+      From worker 7:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+      From worker 8:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+      From worker 5:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      From worker 2:	<span class=" -Color -Color-Bold -Color-Bold-Green">  Activating</span> environment at `~/Developer/julia-resources/Project.toml`
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next we design our Monte-Carlo function – to squeeze performance, we utilize neighbour lookup vectors. This is considerably faster than e.g. a 2-dimensional convolution, since we can benefit from caching layers when accessing our arrays.</p>
+<p><em>NB:</em> I tried a few different implementations using <a class="reference external" href="https://github.com/JuliaDSP/DSP.jl">DSP</a> <code class="docutils literal notranslate"><span class="pre">conv</span></code> functions, but the performance benefits it’s only seen for very large lattice sizes – which in general, we won’t be using. Consequently, just raw Julia (C speed) <code class="docutils literal notranslate"><span class="pre">for</span></code>-loops are an excellent, albeit naive, way to gain speed.</p>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">&#64;everywhere</span></code> macro so that our structures and functions are defined in all processes. We start by defining a structure storing our Ising problem:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@everywhere</span> <span class="k">using</span> <span class="n">Parameters</span>
+
+<span class="nd">@everywhere</span> <span class="nd">@with_kw</span> <span class="k">struct</span> <span class="kt">IsingModel</span>
+    <span class="n">size</span><span class="o">::</span><span class="kt">Int</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">T</span><span class="o">::</span><span class="kt">Float64</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The Monte-Carlo method itself creates lookup <code class="docutils literal notranslate"><span class="pre">Matrix</span></code> for each direction (up, down, left, right), and then iterates over each spin site, calculates the Metropolis condition, and flips the spin if required, <em>before</em> calculating the next cell.</p>
+<p>Sites must be flipped individually, and not in batches.</p>
+<p>We add a <code class="docutils literal notranslate"><span class="pre">rate</span></code> parameter, which controls how often we copy the lattice configuration and store it in the return vector.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@everywhere</span> <span class="k">function</span> <span class="n">montecarlo</span><span class="p">(</span>
+        <span class="n">ism</span><span class="o">::</span><span class="kt">IsingModel</span><span class="p">;</span>
+        <span class="n">nsweeps</span><span class="o">::</span><span class="kt">Int</span><span class="o">=</span><span class="mi">10</span><span class="o">^</span><span class="mi">7</span><span class="p">,</span> 
+        <span class="n">rate</span><span class="o">::</span><span class="kt">Int</span><span class="o">=</span><span class="mi">5_000</span>
+    <span class="p">)</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Int</span><span class="p">}}</span>
+
+    <span class="n">β</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">ism</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">ism</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="n">lattice</span> <span class="o">=</span> <span class="n">rand</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">L</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+    
+    <span class="c"># store for progress frames</span>
+    <span class="n">intermediary</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c"># lookup matrix</span>
+    <span class="n">indexes</span> <span class="o">=</span> <span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="n">L</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">L</span><span class="p">))</span>
+    
+    <span class="c"># caches</span>
+    <span class="n">up</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">down</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">indexes</span><span class="p">,(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">indexes</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="c"># main loop</span>
+    <span class="k">for</span> <span class="n">sweep</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">nsweeps</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">eachindex</span><span class="p">(</span><span class="n">lattice</span><span class="p">)</span>
+            <span class="n">ΔE</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">lattice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">ΔE</span> <span class="o">*=</span> <span class="n">lattice</span><span class="p">[</span><span class="n">up</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">lattice</span><span class="p">[</span><span class="n">right</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">lattice</span><span class="p">[</span><span class="n">down</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">lattice</span><span class="p">[</span><span class="n">left</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
+            <span class="k">if</span> <span class="n">ΔE</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">β</span> <span class="o">*</span> <span class="n">ΔE</span><span class="p">)</span>
+                <span class="n">lattice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span> <span class="c"># it is very important to update before calculating the next site</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+
+        <span class="c"># store configuration</span>
+        <span class="k">if</span> <span class="n">iszero</span><span class="p">(</span><span class="n">mod</span><span class="p">(</span><span class="n">sweep</span><span class="p">,</span> <span class="n">rate</span><span class="p">))</span>
+            <span class="n">push!</span><span class="p">(</span><span class="n">intermediary</span><span class="p">,</span> <span class="n">copy</span><span class="p">(</span><span class="n">lattice</span><span class="p">))</span>
+        <span class="k">end</span>
+        
+    <span class="k">end</span>
+
+    <span class="n">intermediary</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="visualisation-functions">
+<h3>Visualisation functions<a class="headerlink" href="#visualisation-functions" title="Permalink to this headline">¶</a></h3>
+<p>Next, we’ll add a few visualisation functions so we can inspect our simulations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Plots</span>
+
+<span class="k">function</span> <span class="n">visualise</span><span class="p">(</span><span class="n">m</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">)</span>
+   <span class="n">heatmap</span><span class="p">(</span><span class="n">Gray</span><span class="o">.</span><span class="p">(</span><span class="kt">Float64</span><span class="o">.</span><span class="p">(</span><span class="n">m</span><span class="p">)),</span> <span class="n">ticks</span><span class="o">=</span><span class="nb">false</span><span class="p">)</span> 
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="n">visualise</span><span class="p">(</span><span class="n">v</span><span class="o">::</span><span class="kt">Vector</span><span class="p">;</span> <span class="n">N</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="nd">@assert</span> <span class="n">N</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="n">selection</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">÷</span> <span class="n">N</span><span class="p">)</span><span class="o">:</span><span class="n">length</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">map</span><span class="p">(</span><span class="n">visualise</span><span class="p">,</span> <span class="n">selection</span><span class="p">)</span><span class="o">...</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>visualise (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<p>So far then, we have this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ism</span> <span class="o">=</span> <span class="n">IsingModel</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="nd">@time</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">ism</span><span class="p">)</span>
+<span class="n">visualise</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13.436281 seconds (4.43 k allocations: 1.844 MiB, 0.03% compilation time)
+</pre></div>
+</div>
+<img alt="../_images/ml_ising_11_1.svg" src="../_images/ml_ising_11_1.svg" /></div>
+</div>
+</div>
+</div>
+<div class="section" id="parallelization">
+<h2>Parallelization<a class="headerlink" href="#parallelization" title="Permalink to this headline">¶</a></h2>
+<p>We’ll use the abstraced <code class="docutils literal notranslate"><span class="pre">pmap</span></code> to handle distributing our simulations to the available workers. So we can track the progress a little, we’ll use <a class="reference external" href="https://github.com/timholy/ProgressMeter.jl"><code class="docutils literal notranslate"><span class="pre">ProgressMeter.jl</span></code></a>. We’ll create a few overloaded methods to faciliate this, depending on whether we want to run the same <code class="docutils literal notranslate"><span class="pre">IsingModel</span></code>, or different ones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">ProgressMeter</span>
+
+<span class="k">function</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">ism</span><span class="o">::</span><span class="kt">IsingModel</span><span class="p">,</span> <span class="n">s</span><span class="o">::</span><span class="kt">Symbol</span><span class="p">;</span> <span class="n">N</span><span class="o">::</span><span class="kt">Int</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+    <span class="nd">@assert</span> <span class="n">s</span> <span class="o">==</span> <span class="ss">:parallel</span>
+    <span class="nd">@showprogress</span> <span class="n">pmap</span><span class="p">(</span><span class="n">_</span> <span class="o">-&gt;</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">ism</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">),</span> <span class="mi">1</span><span class="o">:</span><span class="n">N</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="k">function</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">isms</span><span class="o">::</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">IsingModel</span><span class="p">},</span> <span class="n">s</span><span class="o">::</span><span class="kt">Symbol</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">)</span>
+    <span class="nd">@assert</span> <span class="n">s</span> <span class="o">==</span> <span class="ss">:parallel</span>
+    <span class="nd">@showprogress</span> <span class="n">pmap</span><span class="p">(</span><span class="n">ism</span> <span class="o">-&gt;</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">ism</span><span class="p">;</span> <span class="n">kwargs</span><span class="o">...</span><span class="p">),</span> <span class="n">isms</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>montecarlo (generic function with 3 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Allowing us to run multiple parallel simulations in effectively the same period of time:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="nd">@time</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">ism</span><span class="p">,</span> <span class="ss">:parallel</span><span class="p">)</span>
+
+<span class="n">visualise</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">Progress: 100%|█████████████████████████████████████████| Time: 0:00:16</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 16.781731 seconds (5.95 M allocations: 344.395 MiB, 0.60% gc time, 7.63% compilation time)
+</pre></div>
+</div>
+<img alt="../_images/ml_ising_15_2.svg" src="../_images/ml_ising_15_2.svg" /></div>
+</div>
+</div>
+<div class="section" id="training-data">
+<h2>Training data<a class="headerlink" href="#training-data" title="Permalink to this headline">¶</a></h2>
+<p>Our strategy is to simulate the Ising problem for a range of temperatures in which we (<em>a prior</em>) believe the transition temperature to be – that is, we will have some temperatures at which the spins are expected to be ordered, and temperatures at which they are expected to be disordered.</p>
+<p>In order to prepare our data, we want to flatten the lattice configurations, and exploit the $Z_2$ symmetry of the Ising Hamiltonian, stating any configuration of spins has identical energy under a complete spin flip
+$$
+\sigma_i \rightarrow -\sigma_i,
+$$
+allowing us to double the data set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">prepare</span><span class="p">(</span><span class="n">resmap</span><span class="o">::</span><span class="kt">Dict</span><span class="p">{</span><span class="kt">Tp</span><span class="p">,</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}}},</span> <span class="n">T</span><span class="o">::</span><span class="kt">Tp</span><span class="p">)</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}</span> <span class="k">where</span> <span class="kt">Tp</span> <span class="o">&lt;:</span> <span class="kt">Float64</span> 
+    <span class="n">lattice</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="n">resmap</span><span class="p">[</span><span class="n">T</span><span class="p">]</span><span class="o">...</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="c"># convert to 3d array</span>
+    
+    <span class="c"># flatten and cast to float</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">lattice</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">flat</span> <span class="o">=</span> <span class="kt">Float64</span><span class="o">.</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="n">lattice</span><span class="p">,</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="o">:</span><span class="p">)))</span>
+    
+    <span class="c"># concatanate Z2 symmetry partners</span>
+    <span class="n">hcat</span><span class="p">(</span><span class="n">flat</span><span class="p">,</span> <span class="o">-</span><span class="n">flat</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>prepare (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For our temperature range, we’ll choose 15 equally space temperature values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">Trange</span> <span class="o">=</span> <span class="kt">LinRange</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15-element LinRange{Float64}:
+ 1.1,1.26429,1.42857,1.59286,1.75714,…,2.74286,2.90714,3.07143,3.23571,3.4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which we’ll generate and store the results for:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">isms</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsingModel</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="k">for</span> <span class="n">T</span> <span class="k">in</span> <span class="n">Trange</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">montecarlo</span><span class="p">(</span><span class="n">isms</span><span class="p">,</span> <span class="ss">:parallel</span><span class="p">)</span>
+
+<span class="n">size</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">Progress: 100%|█████████████████████████████████████████| Time: 0:00:40</span>
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(15,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And store in a more interpretable manner:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">resmap</span> <span class="o">=</span> <span class="kt">Dict</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}}}(</span> <span class="n">T</span> <span class="o">=&gt;</span> <span class="n">res</span> <span class="k">for</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">Trange</span><span class="p">,</span> <span class="n">results</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dict{Float64, Vector{Matrix{Float64}}} with 15 entries:
+  3.4     =&gt; [[-1.0 -1.0 … -1.0 -1.0; 1.0 -1.0 … -1.0 -1.0; … ; -1.0 1.0 … -1.0…
+  2.25    =&gt; [[1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; 1.0 1.0 … 1.0 1.0; 1.0…
+  1.42857 =&gt; [[1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; 1.0 1.0 … 1.0 1.0; 1.0…
+  3.07143 =&gt; [[1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; -1.0 -1.0 … -1.0 1.0; …
+  1.75714 =&gt; [[-1.0 -1.0 … -1.0 -1.0; -1.0 -1.0 … -1.0 -1.0; … ; -1.0 -1.0 … -1…
+  1.59286 =&gt; [[-1.0 -1.0 … -1.0 -1.0; -1.0 -1.0 … -1.0 -1.0; … ; -1.0 -1.0 … -1…
+  1.92143 =&gt; [[-1.0 -1.0 … -1.0 -1.0; -1.0 -1.0 … -1.0 -1.0; … ; -1.0 -1.0 … -1…
+  2.57857 =&gt; [[1.0 -1.0 … 1.0 1.0; -1.0 -1.0 … -1.0 -1.0; … ; 1.0 1.0 … 1.0 1.0…
+  2.90714 =&gt; [[-1.0 -1.0 … 1.0 1.0; -1.0 -1.0 … -1.0 -1.0; … ; -1.0 -1.0 … -1.0…
+  2.74286 =&gt; [[1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; 1.0 1.0 … 1.0 1.0; 1.0…
+  1.1     =&gt; [[1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; 1.0 1.0 … 1.0 1.0; 1.0…
+  3.23571 =&gt; [[1.0 -1.0 … -1.0 1.0; 1.0 1.0 … -1.0 1.0; … ; -1.0 1.0 … -1.0 -1.…
+  2.41429 =&gt; [[1.0 1.0 … -1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; -1.0 -1.0 … -1.0 -1.0…
+  2.08571 =&gt; [[-1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; 1.0 1.0 … 1.0 1.0; 1.…
+  1.26429 =&gt; [[1.0 1.0 … 1.0 1.0; 1.0 1.0 … 1.0 1.0; … ; 1.0 1.0 … 1.0 1.0; 1.0…
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="temperature-seperation">
+<h3>Temperature seperation<a class="headerlink" href="#temperature-seperation" title="Permalink to this headline">¶</a></h3>
+<p>We’ll only train the neural network on data we are confident on, and allow it to learn the rest – this represents training the model only on data we are confident as being either ferro- or paramagnetic. Choosing the highest and lowest temperature of our simulated set, we’ll prepare the data in the usual manner desired by Flux:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">lowT</span> <span class="o">=</span> <span class="n">prepare</span><span class="p">(</span><span class="n">resmap</span><span class="p">,</span> <span class="n">Trange</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">highT</span> <span class="o">=</span> <span class="n">prepare</span><span class="p">(</span><span class="n">resmap</span><span class="p">,</span> <span class="n">Trange</span><span class="p">[</span><span class="k">end</span><span class="p">])</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="n">size</span><span class="p">(</span><span class="n">lowT</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># number of simulations in a run</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">hcat</span><span class="p">(</span><span class="n">lowT</span><span class="p">,</span> <span class="n">highT</span><span class="p">)</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="n">vcat</span><span class="p">(</span><span class="n">fill</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+<span class="n">length</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8000
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now have 8000 individual trials, which we’ll repeat 10 times for the purpose of brevity. We also use the convenience function <code class="docutils literal notranslate"><span class="pre">Flux.onehotbatch</span></code> to generate the one-hot matrix for training:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Flux</span>
+<span class="k">using</span> <span class="n">Flux</span><span class="o">:</span> <span class="n">onehotbatch</span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="n">onehotbatch</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># repeat 10 times</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">Iterators</span><span class="o">.</span><span class="n">repeated</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="learning-the-transition">
+<h2>Learning the transition<a class="headerlink" href="#learning-the-transition" title="Permalink to this headline">¶</a></h2>
+<p>We’ll use a two layer, one hidden, one output, dense neural network with ReLU activation – essentially a <em>Classifier</em>. We ensure the input of the network is the lattice size (i.e. $L^2$), and that the output has two neurons, representing ferro- and paramagnetic confidence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">NN</span> <span class="o">=</span> <span class="n">Chain</span><span class="p">(</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="n">ism</span><span class="o">.</span><span class="n">size</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">relu</span><span class="p">),</span> <span class="c"># input size is L^2</span>
+    <span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="c"># 2 output neurons</span>
+    
+    <span class="n">softmax</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chain(Dense(100, 10, relu), Dense(10, 2), softmax)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="confidence-measures">
+<h3>Confidence measures<a class="headerlink" href="#confidence-measures" title="Permalink to this headline">¶</a></h3>
+<p>Next we implement a function for extracting the networks confidence across all of our trials – this is simply evaluating the prediction of the network across all of the lattices for different temperatures, taking the average of the result for a <em>specific</em> temperature, and sorting the dictionary by temperatures:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Statistics</span>
+
+<span class="k">function</span> <span class="n">confidence</span><span class="p">(</span><span class="n">NN</span><span class="o">::</span><span class="kt">Chain</span><span class="p">,</span> <span class="n">resmap</span><span class="o">::</span><span class="kt">Dict</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}}})</span>
+    <span class="kt">Dict</span><span class="p">{</span><span class="kt">Float64</span><span class="p">,</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}}(</span>
+        <span class="n">first</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">vec</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">NN</span><span class="p">(</span><span class="n">prepare</span><span class="p">(</span><span class="n">resmap</span><span class="p">,</span> <span class="n">first</span><span class="p">(</span><span class="n">i</span><span class="p">))),</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">resmap</span>
+    <span class="p">)</span> <span class="o">|&gt;</span> <span class="n">sort</span>    
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>confidence (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can view the confidence of our untrained network:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">confidence</span><span class="p">(</span><span class="n">NN</span><span class="p">,</span> <span class="n">resmap</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OrderedCollections.OrderedDict{Float64, Vector{Float64}} with 15 entries:
+  1.1     =&gt; [0.706504, 0.293496]
+  1.26429 =&gt; [0.707628, 0.292372]
+  1.42857 =&gt; [0.70941, 0.29059]
+  1.59286 =&gt; [0.711722, 0.288278]
+  1.75714 =&gt; [0.71676, 0.28324]
+  1.92143 =&gt; [0.7199, 0.2801]
+  2.08571 =&gt; [0.725745, 0.274255]
+  2.25    =&gt; [0.738956, 0.261044]
+  2.41429 =&gt; [0.747137, 0.252863]
+  2.57857 =&gt; [0.753856, 0.246144]
+  2.74286 =&gt; [0.755406, 0.244594]
+  2.90714 =&gt; [0.757546, 0.242454]
+  3.07143 =&gt; [0.758432, 0.241568]
+  3.23571 =&gt; [0.761114, 0.238886]
+  3.4     =&gt; [0.761594, 0.238406]
+</pre></div>
+</div>
+</div>
+</div>
+<p>To visualise this a little better, we define a function for plotting these values, including a line for the exact solution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">plotconfidence</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+   <span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="p">(</span>
+        <span class="n">keys</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="n">collect</span><span class="p">,</span>
+        <span class="n">reduce</span><span class="p">(</span><span class="n">hcat</span><span class="p">,</span> <span class="n">values</span><span class="p">(</span><span class="n">res</span><span class="p">))</span><span class="o">&#39;</span><span class="p">,</span>
+        
+        <span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span>
+        <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;paramagnetic&quot;</span> <span class="s">&quot;ferromagnetic&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">xlabel!</span><span class="p">(</span><span class="s">&quot;T&quot;</span><span class="p">)</span>
+    <span class="n">ylabel!</span><span class="p">(</span><span class="s">&quot;CNN Confidence&quot;</span><span class="p">)</span>
+    
+    <span class="n">plot!</span><span class="p">([</span><span class="n">Onsager</span><span class="p">,</span> <span class="n">Onsager</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="ss">:dash</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="ss">:black</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Onsager Solution&quot;</span><span class="p">)</span>
+    <span class="n">p</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>plotconfidence (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plotconfidence</span><span class="p">(</span><span class="n">confidence</span><span class="p">(</span><span class="n">NN</span><span class="p">,</span> <span class="n">resmap</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ml_ising_37_0.svg" src="../_images/ml_ising_37_0.svg" /></div>
+</div>
+</div>
+<div class="section" id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<p>For training the network, we calculate the crossentropy of the predictions as the loss function, and optimize the neurons with ADAM:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Flux</span><span class="o">:</span> <span class="n">crossentropy</span>
+
+<span class="n">loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">crossentropy</span><span class="p">(</span><span class="n">NN</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="n">ADAM</span><span class="p">()</span>
+
+<span class="nd">@showprogress</span> <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">100</span>
+    <span class="n">Flux</span><span class="o">.</span><span class="n">train!</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">params</span><span class="p">(</span><span class="n">NN</span><span class="p">),</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Green">Progress: 100%|█████████████████████████████████████████| Time: 0:00:33</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>After approximately 20 seconds of training on just the CPU, we can inspect our network’s confidence again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plotconfidence</span><span class="p">(</span><span class="n">confidence</span><span class="p">(</span><span class="n">NN</span><span class="p">,</span> <span class="n">resmap</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ml_ising_41_0.svg" src="../_images/ml_ising_41_0.svg" /></div>
+</div>
+<p>And indeed the point of maximal confusion in the network is <em>almost exactly</em> the Onsager solution.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./quantum"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="quantum_ising.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Quantum Ising Model</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

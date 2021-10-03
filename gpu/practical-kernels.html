@@ -1,0 +1,989 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Writing practical CUDA kernels &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A deep-dive into CUDA.jl" href="cuda-overview.html" />
+    <link rel="prev" title="GPU memory" href="gpu-memory.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="gpu-memory.html">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="cuda-overview.html">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_conic.html">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/optim_serial_code.html">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/quantum_ising.html">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../quantum/ml_ising.html">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/gpu/practical-kernels.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Fgpu/practical-kernels.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/gpu/practical-kernels.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/gpu/practical-kernels.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#thread-unique-identifier">
+   Thread unique identifier
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#kernel-occupancy">
+   Kernel occupancy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-reduce-implementation">
+   A
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     reduce
+    </span>
+   </code>
+   implementation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#avoiding-write-conflicts-with-cuda-atomic">
+     Avoiding write conflicts with
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       CUDA.@atomic
+      </span>
+     </code>
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#thread-reduction">
+     Thread reduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#single-block-reduction">
+     Single block reduction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#grid-reduction-with-atomics">
+     Grid reduction with atomics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shared-memory">
+     Shared memory
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="writing-practical-cuda-kernels">
+<h1>Writing practical CUDA kernels<a class="headerlink" href="#writing-practical-cuda-kernels" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">CUDA</span><span class="p">,</span> <span class="n">BenchmarkTools</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="thread-unique-identifier">
+<h2>Thread unique identifier<a class="headerlink" href="#thread-unique-identifier" title="Permalink to this headline">¶</a></h2>
+<p>We calculate the thread unique identifier using a simple formula</p>
+<p>$$
+\text{id} = x_{\text{thread}} + N \left( x_{\text{block}}  - 1 \right)
+$$</p>
+<p>where $N$ is the number of threads per block.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">kernel</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">blockIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kernel (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Launching this kernel</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="mi">4</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">2</span> <span class="n">kernel</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8-element CuArray{Float32, 1}:
+ 1.0
+ 2.0
+ 3.0
+ 4.0
+ 5.0
+ 6.0
+ 7.0
+ 8.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="kernel-occupancy">
+<h2>Kernel occupancy<a class="headerlink" href="#kernel-occupancy" title="Permalink to this headline">¶</a></h2>
+<p>Finding the right balance between threads and blocks that fully utilize the GPU effectively can be tricky. Fortunately, we can utilize tools to assist finding the optimal launch configuration by compiling our kernel and inspecting it</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">kernel</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">blockIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    
+    <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>kernel (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<p>To analyse our launch, we require some sample data</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">CuArray</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">4096</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">similar</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> 
+<span class="p">;</span> <span class="c"># no ouput</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Attempting a poor configuration also results in poorer performance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">threads</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">blocks</span> <span class="o">=</span> <span class="n">cld</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="mi">32</span><span class="p">)</span>  <span class="c"># ceil division</span>
+
+<span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="n">threads</span> <span class="n">blocks</span><span class="o">=</span><span class="n">blocks</span> <span class="n">kernel</span><span class="p">(</span><span class="o">$</span><span class="n">c</span><span class="p">,</span> <span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="o">$</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 4 evaluations.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">7.535 μs</span> … <span class=" -Color -Color-Magenta"> 1.007 ms</span>  ┊ GC (min … max): 0.00% … 99.01%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">7.790 μs              </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">7.988 μs</span> ± <span class=" -Color -Color-Green">10.003 μs</span>  ┊ GC (mean ± σ):  1.25% ±  0.99%
+
+    ▄█<span class=" -Color -Color-Blue">▃</span>  <span class=" -Color -Color-Green"> </span>                                                    
+  ▃▇██<span class=" -Color -Color-Blue">█</span>█▇<span class=" -Color -Color-Green">▆</span>▅▄▃▃▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▂▁▁▂▁▁▁▁▁▂▁▁▁▂▁▂▂▂▂▂▂▂▂▂▂▂▂ ▃
+  7.53 μs        Histogram: frequency by time        11.2 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">1.45 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">38</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we compile with <code class="docutils literal notranslate"><span class="pre">launch=false</span></code> and analyse the optimal launch configuration:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">kern</span> <span class="o">=</span> <span class="nd">@cuda</span> <span class="n">launch</span><span class="o">=</span><span class="nb">false</span> <span class="n">kernel</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">conf</span> <span class="o">=</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">launch_configuration</span><span class="p">(</span><span class="n">kern</span><span class="o">.</span><span class="n">fun</span><span class="p">)</span>
+<span class="nd">@show</span> <span class="n">conf</span>
+
+<span class="n">threads</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">conf</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span>
+<span class="n">blocks</span>  <span class="o">=</span> <span class="n">cld</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">threads</span><span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="s">&quot;calc = (blocks = </span><span class="si">$blocks</span><span class="s">, threads = </span><span class="si">$threads</span><span class="s">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>conf = (blocks = 32, threads = 1024)
+calc = (blocks = 4, threads = 1024)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can then launch our compiled kernel through a function invocation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">kern</span><span class="p">(</span><span class="o">$</span><span class="n">c</span><span class="p">,</span> <span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="o">$</span><span class="n">b</span><span class="p">;</span> <span class="n">threads</span><span class="p">,</span> <span class="n">blocks</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 9 evaluations.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">1.996 μs</span> … <span class=" -Color -Color-Magenta">552.159 μs</span>  ┊ GC (min … max): 0.00% … 99.50%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">2.122 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">2.273 μs</span> ± <span class=" -Color -Color-Green">  7.781 μs</span>  ┊ GC (mean ± σ):  4.83% ±  1.41%
+
+   ▁▆█<span class=" -Color -Color-Blue">▇</span>▂▁  <span class=" -Color -Color-Green"> </span>                                                   
+  ▃███<span class=" -Color -Color-Blue">█</span>██▆▅<span class=" -Color -Color-Green">▄</span>▃▃▂▂▂▂▂▂▂▂▂▂▁▂▂▂▁▁▁▁▂▁▁▁▂▂▁▁▁▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▂ ▃
+  2 μs            Histogram: frequency by time        3.77 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">1.03 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">23</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>In general a good launch configuration will perform well on any CUDA GPU device, though the optimal may very well be device dependent. As always, profiling and benchmarking is required.</p>
+</div>
+<div class="section" id="a-reduce-implementation">
+<h2>A <code class="docutils literal notranslate"><span class="pre">reduce</span></code> implementation<a class="headerlink" href="#a-reduce-implementation" title="Permalink to this headline">¶</a></h2>
+<p>We can demonstrate some GPU idioms by examining how we might write a reduce function on the GPU.</p>
+<p>The GPU is best utilized by launching independed (trivially parallelizeable) threads. There are a few ways we can keep this practice, and still implement <code class="docutils literal notranslate"><span class="pre">reduce</span></code> effectively.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="kt">CuArray</span><span class="p">{</span><span class="kt">Float32</span><span class="p">,</span> <span class="mi">1</span><span class="p">}([</span><span class="mi">0</span><span class="p">])</span> <span class="c"># result store, samne type as a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element CuArray{Float32, 1}:
+ 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>For comparison, we benchmark the CPU with 1024x1024 elements:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">cpu_a</span> <span class="o">=</span> <span class="kt">Array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nd">@benchmark</span> <span class="n">sum</span><span class="p">(</span><span class="o">$</span><span class="n">cpu_a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">73.902 μs</span> … <span class=" -Color -Color-Magenta">246.050 μs</span>  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">74.465 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">74.902 μs</span> ± <span class=" -Color -Color-Green">  3.705 μs</span>  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▆█<span class=" -Color -Color-Blue">█</span><span class=" -Color -Color-Green">▂</span> ▁▁▁▁                                                    ▂
+  ██<span class=" -Color -Color-Blue">█</span><span class=" -Color -Color-Green">█</span>▅████▅▅▅▃▄▃▃▁▁▃▃▁▃▁▁▃▁▁▁▁▁▁▃▁▁▁▁▃▁▁▁▁▁▁▁▁▁▁▁▃▁▅▇▆▇▇▇▅▅▆▆ █
+  73.9 μs       Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time      91.4 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">0 bytes</span>, allocs estimate: <span class=" -Color -Color-Yellow">0</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="avoiding-write-conflicts-with-cuda-atomic">
+<h3>Avoiding write conflicts with <code class="docutils literal notranslate"><span class="pre">CUDA.&#64;atomic</span></code><a class="headerlink" href="#avoiding-write-conflicts-with-cuda-atomic" title="Permalink to this headline">¶</a></h3>
+<p>A basic implementation leveraging atomics to avoid write conflicts may look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">reduce_kernel</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">blockIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span>
+    
+    <span class="nd">@atomic</span> <span class="n">b</span><span class="p">[]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">b</span><span class="p">[],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+
+<span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1024</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">1024</span> <span class="n">reduce_kernel</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="o">$</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 1734 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">2.743 ms</span> … <span class=" -Color -Color-Magenta">  5.306 ms</span>  ┊ GC (min … max): 0.00% … 44.34%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">2.984 ms               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">2.882 ms</span> ± <span class=" -Color -Color-Green">134.470 μs</span>  ┊ GC (mean ± σ):  0.12% ±  2.25%
+
+  █                               <span class=" -Color -Color-Green"> </span>                      <span class=" -Color -Color-Blue">█</span>▁    
+  █▁▄▃▃▃▁▁▁▁▁▁▁▁▁▁▁▁▄▅▁▁▁▁▁▁▁▁▁▁▁▁<span class=" -Color -Color-Green">▁</span>▁▁▃▁▁▃▃▁▁▁▁▁▁▁▃▁▁▁▁▅▄▆<span class=" -Color -Color-Blue">█</span>█▇█ █
+  2.74 ms      Histogram: <span class=" -Color -Color-Bold">log(</span>frequency<span class=" -Color -Color-Bold">)</span> by time         3 ms <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">32.56 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">2070</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">CUDA</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="kt">CuArray</span><span class="p">{</span><span class="kt">Float32</span><span class="p">,</span> <span class="mi">1</span><span class="p">}([</span><span class="mi">0</span><span class="p">])</span> <span class="c"># result store</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1-element CuArray{Float32, 1}:
+ 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that these atomics result is serialization of access, and thus slow the kernel dramatically.</p>
+</div>
+<div class="section" id="thread-reduction">
+<h3>Thread reduction<a class="headerlink" href="#thread-reduction" title="Permalink to this headline">¶</a></h3>
+<p>The idea is to implement a reduction along the lines of (<code class="docutils literal notranslate"><span class="pre">length(a)=16</span></code>)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">itt</span> <span class="mi">1</span><span class="p">:</span>
+<span class="n">thread</span> <span class="mi">1</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">1</span>  <span class="o">+</span> <span class="mi">2</span>   <span class="o">=</span> <span class="mi">3</span>
+<span class="n">thread</span> <span class="mi">2</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">3</span>  <span class="o">+</span> <span class="mi">4</span>   <span class="o">=</span> <span class="mi">7</span>
+<span class="n">thread</span> <span class="mi">3</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">5</span>  <span class="o">+</span> <span class="mi">6</span>   <span class="o">=</span> <span class="mi">11</span>
+<span class="n">thread</span> <span class="mi">4</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">7</span>  <span class="o">+</span> <span class="mi">8</span>   <span class="o">=</span> <span class="mi">15</span>
+<span class="n">thread</span> <span class="mi">5</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9</span>  <span class="o">+</span> <span class="mi">10</span>  <span class="o">=</span> <span class="mi">19</span>
+<span class="n">thread</span> <span class="mi">6</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="mi">11</span> <span class="o">+</span> <span class="mi">12</span>  <span class="o">=</span> <span class="mi">23</span>
+<span class="n">thread</span> <span class="mi">7</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span> <span class="o">+</span> <span class="mi">14</span>  <span class="o">=</span> <span class="mi">27</span>
+<span class="n">thread</span> <span class="mi">8</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">+</span> <span class="mi">16</span>  <span class="o">=</span> <span class="mi">31</span>
+
+<span class="n">itt</span> <span class="mi">2</span><span class="p">:</span>
+<span class="n">thread</span> <span class="mi">1</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">3</span>  <span class="o">+</span> <span class="mi">7</span>   <span class="o">=</span> <span class="mi">10</span>
+<span class="n">thread</span> <span class="mi">2</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">11</span> <span class="o">+</span> <span class="mi">15</span>  <span class="o">=</span> <span class="mi">26</span>
+<span class="n">thread</span> <span class="mi">3</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="mi">19</span> <span class="o">+</span> <span class="mi">23</span>  <span class="o">=</span> <span class="mi">42</span>
+<span class="n">thread</span> <span class="mi">4</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">=</span> <span class="mi">27</span> <span class="o">+</span> <span class="mi">31</span>  <span class="o">=</span> <span class="mi">58</span>
+
+<span class="n">itt</span> <span class="mi">3</span><span class="p">:</span>
+<span class="n">thread</span> <span class="mi">1</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">26</span>  <span class="o">=</span> <span class="mi">36</span>
+<span class="n">thread</span> <span class="mi">2</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span> <span class="o">+</span> <span class="mi">58</span>  <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">itt</span> <span class="mi">4</span><span class="p">:</span>
+<span class="n">thread</span> <span class="mi">1</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>  <span class="o">=</span> <span class="mi">36</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">=</span> <span class="mi">136</span>
+</pre></div>
+</div>
+<p>in a single block. This does limit our kernel to arrays of length 2 x 1024 = 2048, but provides the ground work for how we scale the pattern over many blocks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">reduce_thread_kernel</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span>
+    
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">elements</span>
+        
+        <span class="n">sync_threads</span><span class="p">()</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">thread</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        
+        <span class="nd">@inbounds</span> <span class="k">if</span> <span class="n">i</span> <span class="o">≤</span> <span class="n">elements</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">+</span> <span class="n">d</span> <span class="o">≤</span> <span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">])</span>
+        <span class="k">end</span>
+        <span class="n">d</span> <span class="o">*=</span> <span class="mi">2</span>
+    <span class="k">end</span>
+    
+    <span class="k">if</span> <span class="n">thread</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">b</span><span class="p">[]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">end</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>reduce_thread_kernel (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Trying out the function on a small sample</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">CuArray</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">CuArray</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c"># limit threads to half of data</span>
+<span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="n">cld</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">a1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="n">reduce_thread_kernel</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">)</span>
+
+<span class="n">CUDA</span><span class="o">.</span><span class="nd">@allowscalar</span> <span class="n">b1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="o">:</span><span class="mi">1024</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="single-block-reduction">
+<h3>Single block reduction<a class="headerlink" href="#single-block-reduction" title="Permalink to this headline">¶</a></h3>
+<p>We can generalise the above implementation for arbitrary array size by first reducing the array above the block size, and then running the algorithm as above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">reduce_block_kernel</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span> <span class="c"># as each thread consumes 2 elements</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span>
+    
+    <span class="n">i</span> <span class="o">=</span> <span class="n">thread</span> <span class="o">+</span> <span class="n">elements</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">≤</span> <span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        
+        <span class="n">a</span><span class="p">[</span><span class="n">thread</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">thread</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="n">elements</span>
+        
+    <span class="k">end</span>
+    
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">elements</span>
+        <span class="n">sync_threads</span><span class="p">()</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">thread</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        
+        <span class="nd">@inbounds</span> <span class="k">if</span> <span class="n">i</span> <span class="o">≤</span> <span class="n">elements</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">+</span> <span class="n">d</span> <span class="o">≤</span> <span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">d</span><span class="p">])</span>
+        <span class="k">end</span>
+        <span class="n">d</span> <span class="o">*=</span> <span class="mi">2</span>
+        
+    <span class="k">end</span>
+    
+    <span class="k">if</span> <span class="n">thread</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">b</span><span class="p">[]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">end</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>reduce_block_kernel (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This effectively reduces the size of the array, over the first <code class="docutils literal notranslate"><span class="pre">while</span></code> loop, until the length of the array is equal to the number of threads. We can now benchmark this function with the original test data, however limiting the GPU to a processing block</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1024</span> <span class="n">reduce_block_kernel</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="o">$</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">235.713 μs</span> … <span class=" -Color -Color-Magenta"> 2.278 ms</span>  ┊ GC (min … max): 0.00% … 91.75%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">244.456 μs              </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">275.479 μs</span> ± <span class=" -Color -Color-Green">68.080 μs</span>  ┊ GC (mean ± σ):  0.15% ±  1.32%
+
+    █<span class=" -Color -Color-Blue">▁</span>          <span class=" -Color -Color-Green"> </span>                                               
+  ▂██<span class=" -Color -Color-Blue">█</span>▆▃▂▂▂▂▂▂▂▂<span class=" -Color -Color-Green">▂</span>▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▁▁▁▁▂▂▂▂▂▂▇▄▂▂▂▂ ▂
+  236 μs          Histogram: frequency by time          409 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">4.23 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">257</span>.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="grid-reduction-with-atomics">
+<h3>Grid reduction with atomics<a class="headerlink" href="#grid-reduction-with-atomics" title="Permalink to this headline">¶</a></h3>
+<p>To fully utilize the GPU, we want to run many blocks so that the GPU can switch between them without latency. To perform a multi-block (grid) reduction we have to take into account that each block is independent, and may not neccessarily be running at the same time as another block. Consequently, our hope to synchronise threads doesn’t extend beyond a single block.</p>
+<p>Instead, we can use atomic operations to write each threads result to the output array before the block switches.</p>
+<p>Consider</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">reduce_gric_atomic_kernel</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>     <span class="c"># number of elements each block will consume</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> 
+    <span class="n">block</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span>
+    
+    <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">block</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">elements</span>
+    
+    <span class="c"># parallel block reduction</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">elements</span>
+        <span class="n">sync_threads</span><span class="p">()</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">thread</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="nd">@inbounds</span> <span class="k">if</span> <span class="n">i</span> <span class="o">≤</span> <span class="n">elements</span> <span class="o">&amp;&amp;</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">d</span> <span class="o">≤</span> <span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">a</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="n">i</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">d</span><span class="p">])</span>
+        <span class="k">end</span>
+        
+        <span class="n">d</span> <span class="o">*=</span> <span class="mi">2</span>
+    <span class="k">end</span>
+    
+    <span class="c"># atomic reduction of this blocks value</span>
+    <span class="k">if</span> <span class="n">thread</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="nd">@atomic</span> <span class="n">b</span><span class="p">[]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">b</span><span class="p">[],</span> <span class="n">a</span><span class="p">[</span><span class="n">offset</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="k">end</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>reduce_gric_atomic_kernel (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Benchmarking this kernel:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1024</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">512</span> <span class="n">reduce_gric_atomic_kernel</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="o">$</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">150.457 μs</span> … <span class=" -Color -Color-Magenta"> 2.231 ms</span>  ┊ GC (min … max): 0.00% … 99.18%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">153.051 μs              </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">153.348 μs</span> ± <span class=" -Color -Color-Green">20.818 μs</span>  ┊ GC (mean ± σ):  0.14% ±  0.99%
+
+                     ▂▂▄▆▅▅▆▅▆▇▇<span class=" -Color -Color-Blue">▇</span>█▅<span class=" -Color -Color-Green">▆</span>▄▃▅▄▃▁                      
+  ▁▁▁▁▁▁▂▂▃▃▃▄▄▅▆▆█▇████████████<span class=" -Color -Color-Blue">█</span>██<span class=" -Color -Color-Green">█</span>███████▇█▇▆▆▆▅▄▃▃▃▃▂▂▂▁▁▁▁ ▅
+  150 μs          Histogram: frequency by time          156 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">992 bytes</span>, allocs estimate: <span class=" -Color -Color-Yellow">48</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Although faster, we are still relying on serial operations with the use of atomic.</p>
+</div>
+<div class="section" id="shared-memory">
+<h3>Shared memory<a class="headerlink" href="#shared-memory" title="Permalink to this headline">¶</a></h3>
+<p>Each block has its own shared memory between threads, which is stored on chip of the streaming multiprocessor. Although this memory is rather small, we can use it for communication between threads, and caching loads.</p>
+<p>We utilise both of these ideas here:</p>
+<p>A given thread writes its memory from <code class="docutils literal notranslate"><span class="pre">a</span></code> into a shared buffer, as well as the element it will be reducing with, along the lines of (ignoring the offset):</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">shared</span><span class="p">[</span><span class="n">thread</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">thread</span><span class="p">]</span>
+<span class="n">shared</span><span class="p">[</span><span class="n">thread</span> <span class="o">+</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">thread</span> <span class="o">+</span> <span class="n">blockDim</span><span class="o">.</span><span class="n">x</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>For a single block (<code class="docutils literal notranslate"><span class="pre">blockdim().x</span> <span class="pre">==</span> <span class="pre">1</span></code>), these values are adjacent.</p>
+<p>The shared buffer thus holds two values per thread, and since we are running at most 1024 threads, the size of the buffer is fixed to 2048.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">reduce_grid_atomic_shared_kernel</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">a</span><span class="o">::</span><span class="kt">AbstractArray</span><span class="p">{</span><span class="kt">T</span><span class="p">},</span> <span class="n">b</span><span class="p">)</span> <span class="k">where</span> <span class="p">{</span><span class="kt">T</span><span class="p">}</span>
+    
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">blockIdx</span><span class="p">()</span><span class="o">.</span><span class="n">x</span>
+    
+    <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">block</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">elements</span>
+
+    <span class="c"># copy into shared memory buffer</span>
+    <span class="n">shared</span> <span class="o">=</span> <span class="nd">@cuStaticSharedMem</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="mi">2048</span><span class="p">,))</span>
+    <span class="nd">@inbounds</span> <span class="n">shared</span><span class="p">[</span><span class="n">thread</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="n">thread</span><span class="p">]</span>
+    <span class="nd">@inbounds</span> <span class="n">shared</span><span class="p">[</span><span class="n">thread</span><span class="o">+</span><span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="n">thread</span><span class="o">+</span><span class="n">blockDim</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="c"># parallel reduction</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">elements</span>
+        <span class="n">sync_threads</span><span class="p">()</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="p">(</span><span class="n">thread</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        
+        <span class="nd">@inbounds</span> <span class="k">if</span> <span class="n">i</span> <span class="o">≤</span> <span class="n">elements</span> <span class="o">&amp;&amp;</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">d</span> <span class="o">≤</span> <span class="n">length</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">shared</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">shared</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">shared</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">d</span><span class="p">])</span>
+        <span class="k">end</span>
+        
+        <span class="n">d</span> <span class="o">*=</span> <span class="mi">2</span>
+    <span class="k">end</span>
+    
+    <span class="c"># atomic end-of-block reduction</span>
+    <span class="k">if</span> <span class="n">thread</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="nd">@atomic</span> <span class="n">b</span><span class="p">[]</span> <span class="o">=</span> <span class="n">op</span><span class="p">(</span><span class="n">b</span><span class="p">[],</span> <span class="n">shared</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">end</span>
+    
+    <span class="k">return</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>reduce_grid_atomic_shared_kernel (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Benchmarking this also</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="nd">@cuda</span> <span class="n">threads</span><span class="o">=</span><span class="mi">1024</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">512</span> <span class="n">reduce_grid_atomic_shared_kernel</span><span class="p">(</span><span class="o">+</span><span class="p">,</span> <span class="o">$</span><span class="n">a</span><span class="p">,</span> <span class="o">$</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan">137.328 μs</span> … <span class=" -Color -Color-Magenta"> 2.558 ms</span>  ┊ GC (min … max): 0.00% … 95.25%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">139.799 μs              </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">139.935 μs</span> ± <span class=" -Color -Color-Green">24.383 μs</span>  ┊ GC (mean ± σ):  0.17% ±  0.95%
+
+            ▁▂▂▁▁▁             ▁▃▅▇<span class=" -Color -Color-Blue">▇</span><span class=" -Color -Color-Green">█</span>██▆▇▅▄▂                    
+  ▁▁▁▁▂▂▄▅▆███████▇▅▅▅▄▄▃▃▄▅▅▇█████<span class=" -Color -Color-Blue">█</span><span class=" -Color -Color-Green">█</span>████████▇▆▅▄▃▃▂▂▂▁▁▁▁▁▁▁▁ ▄
+  137 μs          Histogram: frequency by time          142 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">2.77 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">163</span>.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which gives us a small performance improvement.</p>
+<p>If we compare our efforts to the <code class="docutils literal notranslate"><span class="pre">sum</span></code> implementation in CUDA.jl, we see there is still a little effort to go.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@benchmark</span> <span class="n">CUDA</span><span class="o">.</span><span class="nd">@sync</span> <span class="n">sum</span><span class="p">(</span><span class="o">$</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (<span class=" -Color -Color-Bold -Color-Bold-Cyan">min</span> … <span class=" -Color -Color-Magenta">max</span>):  <span class=" -Color -Color-Bold -Color-Bold-Cyan"> 96.457 μs</span> … <span class=" -Color -Color-Magenta"> 21.465 ms</span>  ┊ GC (min … max): 0.00% … 40.07%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Blue">median</span>):     <span class=" -Color -Color-Bold -Color-Bold-Blue">100.062 μs               </span>┊ GC (median):    0.00%
+ Time  (<span class=" -Color -Color-Bold -Color-Bold-Green">mean</span> ± <span class=" -Color -Color-Green">σ</span>):   <span class=" -Color -Color-Bold -Color-Bold-Green">118.998 μs</span> ± <span class=" -Color -Color-Green">216.389 μs</span>  ┊ GC (mean ± σ):  0.72% ±  0.40%
+
+    █<span class=" -Color -Color-Blue"> </span>              <span class=" -Color -Color-Green"> </span>                                            
+  ▂██<span class=" -Color -Color-Blue">█</span>▃▂▂▂▂▂▂▂▂▂▂▂▂▂<span class=" -Color -Color-Green">▂</span>▁▂▂▁▁▁▁▂▁▁▁▂▁▁▁▁▁▁▁▁▁▂▁▂▂▂▂▂▁▁▂▁▂▁▂▂▂▂▂▄▇▄ ▂
+  96.5 μs          Histogram: frequency by time          173 μs <span class=" -Color -Color-Bold">&lt;</span>
+
+ Memory estimate: <span class=" -Color -Color-Yellow">4.84 KiB</span>, allocs estimate: <span class=" -Color -Color-Yellow">161</span>.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./gpu"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="gpu-memory.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">GPU memory</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="cuda-overview.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">A deep-dive into CUDA.jl</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

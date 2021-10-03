@@ -1,0 +1,1071 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Ising Model &#8212; julia-resources</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mathematics.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/mathematics.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ising transition with machine learning" href="ml_ising.html" />
+    <link rel="prev" title="Neural and Universal Ordinary Differential Equations: Part 02" href="../sciml/neural_universal_diff_eq_02.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">julia-resources</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../titlepage.html">
+   Julia Resources
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  GPU
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/gpu-memory.html">
+   GPU memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/practical-kernels.html">
+   Writing practical CUDA kernels
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../gpu/cuda-overview.html">
+   A deep-dive into CUDA.jl
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Optimization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_basics.html">
+   JuMP basics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../optimization/jump_conic.html">
+   JuMP with conic problems
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  SciML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/optim_serial_code.html">
+   Optimizing serial code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/intro_autodiff.html">
+   Automatic differentiation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_01.html">
+   Neural and Universal Ordinary Differential Equations: Part 01
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../sciml/neural_universal_diff_eq_02.html">
+   Neural and Universal Ordinary Differential Equations: Part 02
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Quantum
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Quantum Ising Model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ml_ising.html">
+   Ising transition with machine learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/quantum/quantum_ising.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/dustpancake/julia-resources"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/dustpancake/julia-resources/issues/new?title=Issue%20on%20page%20%2Fquantum/quantum_ising.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/dustpancake/julia-resources/edit/master/quantum/quantum_ising.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/dustpancake/julia-resources/master?urlpath=tree/quantum/quantum_ising.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transverse-field-ising-chain">
+   Transverse field Ising chain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hamiltonian-construction">
+   Hamiltonian construction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basis-states">
+   Basis states
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagonalization">
+   Diagonalization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#magnetisation">
+   Magnetisation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sparsity">
+   Sparsity
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#diagonalization-of-sparse-matrices">
+     Diagonalization of sparse matrices
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sparse-magnetization">
+     Sparse magnetization
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="quantum-ising-model">
+<h1>Quantum Ising Model<a class="headerlink" href="#quantum-ising-model" title="Permalink to this headline">¶</a></h1>
+<p>Following a notebook by <a class="reference external" href="https://github.com/crstnbr/JuliaOulu20/blob/master/Day2/4_linear_algebra/2_ed_quantum_ising.ipynb">Carsten Bauer &amp; Katharine Hyatt</a>.</p>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Ising_model">Ising Model</a> is a model of ferromagnetism, which considers localized discrete spins of a quantum system.</p>
+<p>We will study the Ising model in terms of the time-independent Schrödinger equation
+$$
+H \left|{ \psi }\right\rangle = E \left|{ \psi }\right\rangle,
+$$</p>
+<p>where $H$ is to be diagonalized by means of a computational model.</p>
+<div class="section" id="transverse-field-ising-chain">
+<h2>Transverse field Ising chain<a class="headerlink" href="#transverse-field-ising-chain" title="Permalink to this headline">¶</a></h2>
+<p>We consider the general Ising hamiltonian function</p>
+<p>$$
+\mathscr{H} = - \sum_{\left\langle i,j \right\rangle} J_{ij}\sigma_i \sigma_j - \mu \sum_j h_j \sigma_j
+$$</p>
+<p>for any two adjacent crystal sites $i, j$, with interaction $J_{i,j}$ between sites, and external magnetic field $h_j$. The first sum is across pairs of adjecent spins, with notation $\left\langle i,j \right\rangle$ denoting nearest neighbour.</p>
+<p>We will denote the spin states through the Pauli matrices, with the external magnetic field acting perpendicular to the spin orientations – i.e., we use $\sigma^z$ for spin directions (the first summation term), and $\sigma^x$ for interaction with the magnetic field (second summation term)</p>
+<p>For our notation, we will combine $\mu h_j =: h$, $\forall j$.</p>
+<p>We define</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">σᶻ</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">σˣ</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span><span class="p">;</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">σᶻ</span><span class="p">,</span> <span class="n">σˣ</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>([1 0; 0 -1], [0 1; 1 0])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We denote the Eigenvectors of $\sigma^z$ by $\left|{ \uparrow }\right\rangle$, $\left|{ \downarrow }\right\rangle$ respective to their orientation along the $z$ axis – these will also denote our spin orientations.</p>
+<p>We can then see that the function of $\sigma^x$ is to flip the orientation, as it is purely off-diagonal:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">LinearAlgebra</span>
+
+<span class="n">evecs</span> <span class="o">=</span> <span class="n">eigen</span><span class="p">(</span><span class="n">σᶻ</span><span class="p">)</span><span class="o">.</span><span class="n">vectors</span>
+<span class="n">s_down</span> <span class="o">=</span> <span class="n">evecs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">:</span><span class="p">]</span>
+<span class="n">s_up</span> <span class="o">=</span> <span class="n">evecs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">:</span><span class="p">]</span>
+
+<span class="nd">@show</span> <span class="n">s_up</span><span class="p">,</span> <span class="n">s_down</span>
+
+<span class="n">s_up</span> <span class="o">==</span> <span class="n">σˣ</span> <span class="o">*</span> <span class="n">s_down</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(s_up, s_down) = ([1.0, 0.0], [0.0, 1.0])
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>true
+</pre></div>
+</div>
+</div>
+</div>
+<p>Expressed symbolically:
+$$
+\sigma^x \left|{ \uparrow }\right\rangle = \left|{ \downarrow }\right\rangle.
+$$</p>
+</div>
+<div class="section" id="hamiltonian-construction">
+<h2>Hamiltonian construction<a class="headerlink" href="#hamiltonian-construction" title="Permalink to this headline">¶</a></h2>
+<p>In the case of a trivial (diagonal) Hamiltonian (i.e. no external magnetic field $h=0$), we have a classical system where the spins are flipped and disordered by thermal fluctuations.</p>
+<p>Such a system exhibits different phases at different temperatures $T$ relative to a critical transition temperature $T_c$:</p>
+<ul class="simple">
+<li><p>the <em>paramagnetic</em> phase ($T &gt; T_c$)</p></li>
+<li><p>the <em>ferromagnetic</em> phase ($T &lt; T_c$)</p></li>
+</ul>
+<p>with an implicit ferromagnetic ground state $T=0$.</p>
+<p>By introducing $h\neq0$, we construct a Hamiltonian matrix with off-diagonal elements contributed from $\sigma^x$ terms. These elements represent the quantum fluctuations of the system, by changing some spins orientated along $z$ to $x$.</p>
+<p>For now, let us choose $\sigma^z$ as our Eigenbasis for computation.</p>
+<p>We will use the Kronecker product</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">kron</span><span class="p">(</span><span class="n">σᶻ</span><span class="p">,</span><span class="n">σᶻ</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4×4 Matrix{Int64}:
+ 1   0   0  0
+ 0  -1   0  0
+ 0   0  -1  0
+ 0   0   0  1
+</pre></div>
+</div>
+</div>
+</div>
+<p>which we can abreviate with</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="o">⊗</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">kron</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="c"># identities</span>
+<span class="o">⊗</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">,</span> <span class="n">y</span><span class="o">::</span><span class="kt">UniformScaling</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span> <span class="o">⊗</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">]</span>
+<span class="o">⊗</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">UniformScaling</span><span class="p">,</span> <span class="n">y</span><span class="o">::</span><span class="kt">Matrix</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">]</span> <span class="o">⊗</span> <span class="n">y</span>
+<span class="o">⊗</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">UniformScaling</span><span class="p">,</span> <span class="n">y</span><span class="o">::</span><span class="kt">UniformScaling</span><span class="p">)</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">]</span> <span class="o">⊗</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>⊗ (generic function with 4 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">σᶻ</span> <span class="o">⊗</span> <span class="n">σᶻ</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4×4 Matrix{Int64}:
+ 1   0   0  0
+ 0  -1   0  0
+ 0   0  -1  0
+ 0   0   0  1
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next step is to calculate permutations of the summation terms, so we can assemble our Hamiltonian as a $2^n \times 2^n$ matrix, representing a quantum chain of $n$ particles:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">isingfield</span><span class="p">(;</span><span class="n">N</span><span class="o">::</span><span class="kt">Int</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="n">σᶻ</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">σˣ</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span><span class="p">;</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c"># assemble terms</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="n">vcat</span><span class="p">([</span><span class="n">σᶻ</span><span class="p">,</span> <span class="n">σᶻ</span><span class="p">],</span> <span class="n">fill</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+    
+    <span class="n">H</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="mi">2</span><span class="o">^</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="o">^</span><span class="n">N</span><span class="p">)</span>
+    
+    <span class="c"># compute first sum</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">H</span> <span class="o">-=</span> <span class="n">foldl</span><span class="p">(</span><span class="o">⊗</span><span class="p">,</span> <span class="n">terms</span><span class="p">)</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="c"># sum two terms</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="n">fill!</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">I</span><span class="p">)</span>
+    <span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">σˣ</span>
+    
+    <span class="c"># compute second sum</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">N</span>
+        <span class="n">H</span> <span class="o">-=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">foldl</span><span class="p">(</span><span class="o">⊗</span><span class="p">,</span> <span class="n">terms</span><span class="p">)</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">H</span>
+<span class="k">end</span>
+
+<span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4×4 Matrix{Float64}:
+ -1.0  -0.5  -0.5   0.0
+ -0.5   1.0   0.0  -0.5
+ -0.5   0.0   1.0  -0.5
+  0.0  -0.5  -0.5  -1.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="basis-states">
+<h2>Basis states<a class="headerlink" href="#basis-states" title="Permalink to this headline">¶</a></h2>
+<p>We will choose 0 (false) to represent down spins, and 1 (true) to represent up spins. We can then write basis states in the notation
+$$
+\left\lvert 0010 \right\rangle = \left\lvert \downarrow  \downarrow \uparrow \downarrow \right\rangle
+$$
+for e.g. a 4 site system.</p>
+<p>The full basis is then just a counting problem:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># helper function</span>
+<span class="n">binrep</span><span class="p">(</span><span class="n">i</span><span class="o">::</span><span class="kt">Int</span><span class="p">,</span> <span class="n">pad</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span> <span class="o">=</span> <span class="kt">BitArray</span><span class="p">(</span><span class="n">parse</span><span class="p">(</span><span class="kt">Bool</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="k">in</span> <span class="n">string</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="n">pad</span><span class="p">))</span>
+
+<span class="k">function</span> <span class="n">makebasis</span><span class="p">(</span><span class="n">N</span><span class="o">::</span><span class="kt">Int</span><span class="p">)</span>
+    <span class="n">nstates</span> <span class="o">=</span> <span class="mi">2</span><span class="o">^</span><span class="n">N</span>
+    <span class="n">basis</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">BitArray</span><span class="p">{</span><span class="mi">1</span><span class="p">}}(</span><span class="nb">undef</span><span class="p">,</span> <span class="n">nstates</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span><span class="o">:</span><span class="n">nstates</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">basis</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">binrep</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">basis</span>
+<span class="k">end</span>     
+
+<span class="n">makebasis</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16-element Vector{BitVector}:
+ [0, 0, 0, 0]
+ [0, 0, 0, 1]
+ [0, 0, 1, 0]
+ [0, 0, 1, 1]
+ [0, 1, 0, 0]
+ [0, 1, 0, 1]
+ [0, 1, 1, 0]
+ [0, 1, 1, 1]
+ [1, 0, 0, 0]
+ [1, 0, 0, 1]
+ [1, 0, 1, 0]
+ [1, 0, 1, 1]
+ [1, 1, 0, 0]
+ [1, 1, 0, 1]
+ [1, 1, 1, 0]
+ [1, 1, 1, 1]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="diagonalization">
+<h2>Diagonalization<a class="headerlink" href="#diagonalization" title="Permalink to this headline">¶</a></h2>
+<p>We solve the Schrödinger equation by diagonalizing $\mathscr{H}$. We will use $N=3$, and $h=1$:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">makebasis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">eigen</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="n">vals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8-element Vector{Float64}:
+ -3.493959207434932
+ -2.60387547160968
+ -0.9999999999999951
+ -0.10991626417473999
+  0.10991626417474265
+  1.0000000000000018
+  2.6038754716096766
+  3.493959207434934
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can read off the ground state as a probability amplitude for each basis vector</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">groundstate</span> <span class="o">=</span> <span class="n">vecs</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8-element Vector{Float64}:
+ 0.532480753352626
+ 0.29550452425304996
+ 0.20449547574694707
+ 0.29550452425305196
+ 0.29550452425305007
+ 0.20449547574694865
+ 0.29550452425305196
+ 0.5324807533526363
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can pretty print this with some not so pretty string formatting:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">LaTeXStrings</span>
+
+<span class="c"># fmt function for kets</span>
+<span class="k">function</span> <span class="n">fmt</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">BitVector</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="nb">false</span> <span class="o">?</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">downarrow&quot;</span> <span class="o">:</span> <span class="s">&quot;</span><span class="se">\\</span><span class="s">uparrow&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">x</span><span class="p">)</span>
+    <span class="s">&quot;</span><span class="se">\\</span><span class="s">left</span><span class="se">\\</span><span class="s">lvert </span><span class="si">$s</span><span class="s"> </span><span class="se">\\</span><span class="s">right</span><span class="se">\\</span><span class="s">rangle&quot;</span>
+<span class="k">end</span>
+
+<span class="c"># fmt function for results</span>
+<span class="k">function</span> <span class="n">fmt</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">groundstate</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="kt">String</span><span class="p">[</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">text{Spin State: Probability}&quot;</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">groundstate</span><span class="p">)</span>
+        <span class="n">push!</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">$</span><span class="p">(</span><span class="n">fmt</span><span class="p">(</span><span class="n">b</span><span class="p">))</span><span class="s">: </span><span class="si">$</span><span class="p">(</span><span class="n">abs2</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">latexstring</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="s">&quot;</span><span class="se">\\\\</span><span class="s">&quot;</span><span class="p">))</span>
+<span class="k">end</span>
+
+<span class="n">fmt</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">groundstate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\begin{split}\text{Spin State: Probability}\\\left\lvert \downarrow\downarrow\downarrow \right\rangle: 0.28353575269098014\\\left\lvert \downarrow\downarrow\uparrow \right\rangle: 0.08732292385402139\\\left\lvert \downarrow\uparrow\downarrow \right\rangle: 0.04181839960097022\\\left\lvert \downarrow\uparrow\uparrow \right\rangle: 0.08732292385402257\\\left\lvert \uparrow\downarrow\downarrow \right\rangle: 0.08732292385402146\\\left\lvert \uparrow\downarrow\uparrow \right\rangle: 0.04181839960097086\\\left\lvert \uparrow\uparrow\downarrow \right\rangle: 0.08732292385402257\\\left\lvert \uparrow\uparrow\uparrow \right\rangle: 0.2835357526909911\end{split}\]</div>
+</div>
+</div>
+<p>We can try this again with $h=0$ to see the case of a trivial Hamiltonian:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">basis0</span> <span class="o">=</span> <span class="n">makebasis</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">H0</span> <span class="o">=</span> <span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">vals0</span><span class="p">,</span> <span class="n">vecs0</span> <span class="o">=</span> <span class="n">eigen</span><span class="p">(</span><span class="n">H0</span><span class="p">)</span>
+<span class="n">groundstate0</span> <span class="o">=</span> <span class="n">vecs0</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">fmt</span><span class="p">(</span><span class="n">basis0</span><span class="p">,</span> <span class="n">groundstate0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[\begin{split}\text{Spin State: Probability}\\\left\lvert \downarrow\downarrow\downarrow \right\rangle: 1.0\\\left\lvert \downarrow\downarrow\uparrow \right\rangle: 0.0\\\left\lvert \downarrow\uparrow\downarrow \right\rangle: 0.0\\\left\lvert \downarrow\uparrow\uparrow \right\rangle: 0.0\\\left\lvert \uparrow\downarrow\downarrow \right\rangle: 0.0\\\left\lvert \uparrow\downarrow\uparrow \right\rangle: 0.0\\\left\lvert \uparrow\uparrow\downarrow \right\rangle: 0.0\\\left\lvert \uparrow\uparrow\uparrow \right\rangle: 0.0\end{split}\]</div>
+</div>
+</div>
+<p>As we expect, all of the spin states are aligned along the $-z$ axis.</p>
+</div>
+<div class="section" id="magnetisation">
+<h2>Magnetisation<a class="headerlink" href="#magnetisation" title="Permalink to this headline">¶</a></h2>
+<p>Quantum magnetization can be computed through</p>
+<div class="math notranslate nohighlight">
+\[M = \frac{1}{N}\sum_i \left( \sigma_i^z \right)^2,\]</div>
+<p>where the sum is over spin sites.</p>
+<p>Computationally, this may be expressed</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">magnetization</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">bstate</span><span class="p">)</span> <span class="k">in</span> <span class="n">enumerate</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
+        <span class="n">blength</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">bstate</span><span class="p">)</span>
+        
+        <span class="n">bM</span> <span class="o">=</span> <span class="n">mapreduce</span><span class="p">(</span>
+            <span class="n">spin</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">spin</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">blength</span><span class="p">,</span> <span class="c"># mult by spin for orientation</span>
+            <span class="o">+</span><span class="p">,</span> 
+            <span class="n">bstate</span><span class="p">,</span>
+            <span class="n">init</span><span class="o">=</span><span class="mf">0.</span>
+        <span class="p">)</span>
+        
+        <span class="nd">@assert</span> <span class="n">abs</span><span class="p">(</span><span class="n">bM</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+        <span class="n">M</span> <span class="o">+=</span> <span class="n">abs</span><span class="p">(</span><span class="n">bM</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">M</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>magnetization (generic function with 1 method)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">magnetization</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">groundstate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.711381003587981
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us investigate how the magnetization changes with $h$ from $10^{-2}$ to $10^2$:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Plots</span>
+
+<span class="k">function</span> <span class="n">makemagplot</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="p">()</span>
+
+    <span class="n">hrange</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">.^</span> <span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">N</span> <span class="k">in</span> <span class="mi">2</span><span class="o">:</span><span class="mi">10</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">hrange</span><span class="p">))</span>
+        <span class="n">basis</span> <span class="o">=</span> <span class="n">makebasis</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="k">in</span> <span class="n">enumerate</span><span class="p">(</span><span class="n">hrange</span><span class="p">)</span>
+            <span class="c"># diagonalize</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">eigen</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+            <span class="c"># groundstate magnetization</span>
+            <span class="n">groundstate</span> <span class="o">=</span> <span class="n">vecs</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">magnetization</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">groundstate</span><span class="p">)</span>
+        <span class="k">end</span>
+
+        <span class="n">plot!</span><span class="p">(</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">hrange</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s">&quot;N = </span><span class="si">$N</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">xlab</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;h&quot;</span><span class="p">,</span>
+            <span class="n">ylab</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;M(h)&quot;</span>
+        <span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">p</span>
+<span class="k">end</span>
+
+<span class="nd">@time</span> <span class="n">makemagplot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  5.495669 seconds (3.26 M allocations: 6.087 GiB, 3.95% gc time, 10.69% compilation time)
+</pre></div>
+</div>
+<img alt="../_images/quantum_ising_28_1.svg" src="../_images/quantum_ising_28_1.svg" /></div>
+</div>
+</div>
+<div class="section" id="sparsity">
+<h2>Sparsity<a class="headerlink" href="#sparsity" title="Permalink to this headline">¶</a></h2>
+<p>The issue with the above implementation is that the Hamiltonian scales with $2^{2N}$, which can quickly cause memory issues.</p>
+<p>However, most of the entries of the Hamiltonian will be zero entries. We can instead use a more memory efficient array implementation with <code class="docutils literal notranslate"><span class="pre">SparseArrays</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">SparseArrays</span>
+
+<span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="n">sparse</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>16×16 SparseMatrixCSC{Int64, Int64} with 80 stored entries:
+⢟⣵⠑⢄⠑⢄⠀⠀
+⠑⢄⢟⣵⠀⠀⠑⢄
+⠑⢄⠀⠀⢟⣵⠑⢄
+⠀⠀⠑⢄⠑⢄⢟⣵
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll now reimplement our <code class="docutils literal notranslate"><span class="pre">isingfield</span></code> function to use these <code class="docutils literal notranslate"><span class="pre">SparseArrays</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">isingfield</span><span class="p">(;</span> <span class="n">N</span><span class="o">::</span><span class="kt">Int</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+    <span class="n">σᶻ</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span><span class="p">;</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">|&gt;</span> <span class="n">sparse</span>
+    <span class="n">σˣ</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span><span class="p">;</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">]</span> <span class="o">|&gt;</span> <span class="n">sparse</span>
+    
+    <span class="c"># add identity</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">sparse</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">I</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    
+    <span class="c"># assemble terms</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="n">fill</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">σᶻ</span>
+    <span class="n">terms</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">σᶻ</span>
+    
+    <span class="c"># sparse H</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">spzeros</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="mi">2</span><span class="o">^</span><span class="n">N</span><span class="p">,</span> <span class="mi">2</span><span class="o">^</span><span class="n">N</span><span class="p">)</span>
+    
+    <span class="c"># compute first sum</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">H</span> <span class="o">-=</span> <span class="n">foldl</span><span class="p">(</span><span class="o">⊗</span><span class="p">,</span> <span class="n">terms</span><span class="p">)</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="c"># sum two terms</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="n">fill!</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">id</span><span class="p">)</span>
+    <span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">σˣ</span>
+    
+    <span class="c"># compute second sum</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">N</span>
+        <span class="n">H</span> <span class="o">-=</span> <span class="n">h</span> <span class="o">*</span> <span class="n">foldl</span><span class="p">(</span><span class="o">⊗</span><span class="p">,</span> <span class="n">terms</span><span class="p">)</span>
+        <span class="n">terms</span> <span class="o">=</span> <span class="n">circshift</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">H</span>
+<span class="k">end</span>
+
+<span class="nd">@time</span> <span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.000637 seconds (673 allocations: 2.618 MiB)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1024×1024 SparseMatrixCSC{Int64, Int64} with 11264 stored entries:
+⣿⣿⣾⢦⡀⠳⣄⠀⠀⠀⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠺⣟⢻⣶⣿⡂⠈⠳⣄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢤⡈⠻⠻⠿⣧⣤⣠⡈⠳⠄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠙⢦⡀⠀⣻⣿⣿⣙⣦⡀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠙⢦⡈⠳⣼⣿⣿⡆⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠙⢦⡀⠀⠀⠁⠀⠈⠈⠉⣿⣿⣾⢦⡀⠳⣄⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠺⣟⢻⣶⣿⡂⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⢤⡈⠻⠻⠿⣧⣤⣠⡈⠳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠙⢦⡀⠀⣻⣿⣿⣙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠙⢦⡈⠳⣼⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄
+⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡟⢦⡈⠳⣄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣍⣿⣿⣯⠀⠈⠳⣄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢦⡈⠋⠛⢻⣶⣦⣦⡈⠓⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠨⣿⠿⣧⣽⡦⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠙⢦⠈⠳⡿⣿⣿⣀⡀⡀⠀⢀⠀⠀⠈⠳⣄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡟⢦⡈⠳⣄⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠈⠻⣍⣿⣿⣯⠀⠈⠳⣄⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠐⢦⡈⠋⠛⢻⣶⣦⣦⡈⠓
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠙⢦⡀⠨⣿⠿⣧⣽⡦
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠀⠙⢦⠈⠳⡿⣿⣿
+</pre></div>
+</div>
+</div>
+</div>
+<p>Which is incredibly fast and memory efficient. This allows us to compute much larger Hamiltonians:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@time</span> <span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2.219281 seconds (3.77 k allocations: 6.742 GiB, 21.26% gc time)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1048576×1048576 SparseMatrixCSC{Int64, Int64} with 22020096 stored entries:
+⣿⣿⣾⢦⡀⠳⣄⠀⠀⠀⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠺⣟⢻⣶⣿⡂⠈⠳⣄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢤⡈⠻⠻⠿⣧⣤⣠⡈⠳⠄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠙⢦⡀⠀⣻⣿⣿⣙⣦⡀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠙⢦⡈⠳⣼⣿⣿⡆⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠙⢦⡀⠀⠀⠁⠀⠈⠈⠉⣿⣿⣾⢦⡀⠳⣄⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠺⣟⢻⣶⣿⡂⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⢤⡈⠻⠻⠿⣧⣤⣠⡈⠳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠙⢦⡀⠀⣻⣿⣿⣙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠙⢦⡈⠳⣼⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄
+⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡟⢦⡈⠳⣄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣍⣿⣿⣯⠀⠈⠳⣄⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢦⡈⠋⠛⢻⣶⣦⣦⡈⠓⠀⠀⠀⠈⠳⣄⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠨⣿⠿⣧⣽⡦⠀⠀⠀⠀⠀⠈⠳⣄⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠙⢦⠈⠳⡿⣿⣿⣀⡀⡀⠀⢀⠀⠀⠈⠳⣄
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡟⢦⡈⠳⣄⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠈⠻⣍⣿⣿⣯⠀⠈⠳⣄⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠐⢦⡈⠋⠛⢻⣶⣦⣦⡈⠓
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠙⢦⡀⠨⣿⠿⣧⣽⡦
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠀⠙⢦⠈⠳⡿⣿⣿
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="diagonalization-of-sparse-matrices">
+<h3>Diagonalization of sparse matrices<a class="headerlink" href="#diagonalization-of-sparse-matrices" title="Permalink to this headline">¶</a></h3>
+<p>The regular <code class="docutils literal notranslate"><span class="pre">eigen</span></code> function does not support <code class="docutils literal notranslate"><span class="pre">SparseMatrix</span></code> types. The Julia warning suggests use of <a class="reference external" href="https://github.com/JuliaLinearAlgebra/Arpack.jl"><code class="docutils literal notranslate"><span class="pre">Arpack.jl</span></code></a>, a wrapper for <a class="reference external" href="https://www.caam.rice.edu/software/ARPACK/">Fortran’s ARPACK</a>. However, there also exist pure Julia implementations, such as <a class="reference external" href="https://github.com/haampie/ArnoldiMethod.jl"><code class="docutils literal notranslate"><span class="pre">ArnoldiMethod.jl</span></code></a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">ArnoldiMethod</span>
+<span class="k">import</span> <span class="n">LinearAlgebra</span><span class="o">:</span> <span class="n">eigen</span>
+
+<span class="k">function</span> <span class="n">eigen</span><span class="p">(</span><span class="n">x</span><span class="o">::</span><span class="kt">SparseMatrixCSC</span><span class="p">)</span>
+    <span class="n">decomp</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">partialschur</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">nev</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">SR</span><span class="p">())</span> <span class="c"># only solve ground state</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">partialeigen</span><span class="p">(</span><span class="n">decomp</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">vals</span><span class="o">=</span><span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span><span class="o">=</span><span class="n">vecs</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="n">eigen</span><span class="p">(</span><span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(vals = [-12.381489999654747], vecs = [0.2933991129750299; 0.14835657714581163; … ; 0.14835657691347928; 0.2933991125796642])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have the same interface for our functions, and can recreate our plot from above using a much more efficient implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="nd">@time</span> <span class="n">makemagplot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0.123960 seconds (64.21 k allocations: 64.731 MiB, 71.46% gc time)
+</pre></div>
+</div>
+<img alt="../_images/quantum_ising_38_1.svg" src="../_images/quantum_ising_38_1.svg" /></div>
+</div>
+</div>
+<div class="section" id="sparse-magnetization">
+<h3>Sparse magnetization<a class="headerlink" href="#sparse-magnetization" title="Permalink to this headline">¶</a></h3>
+<p>We’ll adapt our <code class="docutils literal notranslate"><span class="pre">magnetizaion</span></code> function to calculate the basis states of $\mathscr{H}$ as <code class="docutils literal notranslate"><span class="pre">BitVectors</span></code> dynamically:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">magnetization</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">slength</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="kt">Int</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="n">slength</span><span class="p">))</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mf">0.</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">:</span><span class="n">slength</span>
+        <span class="n">bstate</span> <span class="o">=</span> <span class="n">binrep</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+        
+        <span class="n">bM</span> <span class="o">=</span> <span class="n">mapreduce</span><span class="p">(</span>
+            <span class="n">spin</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">^</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">spin</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">N</span><span class="p">,</span> <span class="c"># mult by spin for orientation</span>
+            <span class="o">+</span><span class="p">,</span> 
+            <span class="n">bstate</span><span class="p">,</span>
+            <span class="n">init</span><span class="o">=</span><span class="mf">0.</span>
+        <span class="p">)</span>
+        
+        <span class="nd">@assert</span> <span class="n">abs</span><span class="p">(</span><span class="n">bM</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+        <span class="n">M</span> <span class="o">+=</span> <span class="n">abs</span><span class="p">(</span><span class="n">bM</span><span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">M</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>magnetization (generic function with 2 methods)
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then create a new implementation of <code class="docutils literal notranslate"><span class="pre">makemagplot</span></code> to use this alternative function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">makemagplot</span><span class="p">(;</span><span class="n">nmax</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">nstep</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">plot</span><span class="p">()</span>
+
+    <span class="n">hrange</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">.^</span> <span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">N</span> <span class="k">in</span> <span class="mi">2</span><span class="o">:</span><span class="n">nstep</span><span class="o">:</span><span class="n">nmax</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">length</span><span class="p">(</span><span class="n">hrange</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="k">in</span> <span class="n">enumerate</span><span class="p">(</span><span class="n">hrange</span><span class="p">)</span>
+            <span class="c"># diagonalize</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">isingfield</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">eigen</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+
+            <span class="c"># groundstate magnetization</span>
+            <span class="n">groundstate</span> <span class="o">=</span> <span class="nd">@view</span> <span class="n">vecs</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="c"># no need to copy</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">magnetization</span><span class="p">(</span><span class="n">groundstate</span><span class="p">)</span>
+        <span class="k">end</span>
+
+        <span class="n">plot!</span><span class="p">(</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">hrange</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">xscale</span><span class="o">=</span><span class="ss">:log10</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="ss">:circle</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s">&quot;N = </span><span class="si">$N</span><span class="s">&quot;</span><span class="p">,</span>
+            <span class="n">xlab</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;h&quot;</span><span class="p">,</span>
+            <span class="n">ylab</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;M(h)&quot;</span>
+        <span class="p">)</span>
+    <span class="k">end</span>
+    
+    <span class="n">p</span>
+<span class="k">end</span>
+
+<span class="nd">@time</span> <span class="n">makemagplot</span><span class="p">(</span><span class="n">nmax</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">nstep</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 83.496897 seconds (70.07 M allocations: 149.035 GiB, 4.06% gc time)
+</pre></div>
+</div>
+<img alt="../_images/quantum_ising_42_1.svg" src="../_images/quantum_ising_42_1.svg" /></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-1.6"
+        },
+        kernelOptions: {
+            kernelName: "julia-1.6",
+            path: "./quantum"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-1.6'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="../sciml/neural_universal_diff_eq_02.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Neural and Universal Ordinary Differential Equations: Part 02</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="ml_ising.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Ising transition with machine learning</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Fergus Baker<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
